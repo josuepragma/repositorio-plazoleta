@@ -14,8 +14,6 @@ public class RestaurantRequestDto {
 
     @NotEmpty(message = "RESTAURANT NAME field is required.")
     @Pattern(regexp = "^\\d*[a-zA-Z][a-zA-Z0-9]*$", message = "RESTAURANT NAME must have one letter at least")
-//    @Pattern(regexp = "^(?=.*[a-z])$", message = "RESTAURANT NAME must have one letter at least")
-//    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])([a-z0-9_-]+)$", message = "RESTAURANT NAME must have one letter at least")
     String name;
 
     @NotEmpty(message = "RESTAURANT NIT field is required.")

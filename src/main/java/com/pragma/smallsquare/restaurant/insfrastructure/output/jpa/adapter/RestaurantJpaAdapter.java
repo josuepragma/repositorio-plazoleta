@@ -21,7 +21,7 @@ public class RestaurantJpaAdapter implements IRestaurantPersistencePort {
     @Override
     public Restaurant saveRestaurant(Restaurant restaurant) {
         if (restaurantRepository.findByNit(restaurant.getNit()).isPresent()) {
-            throw new RestaurantAlreadyExistsException();
+            throw new RestaurantAlreadyExistsException("Restaurant already exist with NIT: " + restaurant.getNit());
         }
 
         RestaurantEntity restaurantEntity = restaurantRepository.save(restaurantEntityMapper.toEntity(restaurant));
@@ -43,15 +43,15 @@ public class RestaurantJpaAdapter implements IRestaurantPersistencePort {
     public Restaurant getRestaurantByNit(String nit) {
 
         RestaurantEntity restaurantEntity = restaurantRepository.findByNit(nit)
-                .orElseThrow(RestaurantNotFoundException::new);
+                .orElseThrow(() -> new RestaurantNotFoundException("Restaurant searched doesn't exist with NIT = " + nit));
 
         return restaurantEntityMapper.toRestaurant(restaurantEntity);
     }
 
     @Override
-    public Restaurant getRestaurantByName(String name) {
-        RestaurantEntity restaurantEntity = restaurantRepository.findByName(name)
-                .orElseThrow(RestaurantNotFoundException::new);
+    public Restaurant getRestaurantById(Integer id) {
+        RestaurantEntity restaurantEntity = restaurantRepository.findById(id)
+                .orElseThrow(() -> new RestaurantNotFoundException("Restaurant searched doesn't exist with ID = " + id));
 
         return restaurantEntityMapper.toRestaurant(restaurantEntity);
     }
@@ -64,7 +64,7 @@ public class RestaurantJpaAdapter implements IRestaurantPersistencePort {
     }
 
     @Override
-    public void deleteRestaurantByNit(String nit) {
-        restaurantRepository.deleteByNit(nit);
+    public void deleteRestaurantById(Integer id) {
+        restaurantRepository.deleteById(id);
     }
 }

@@ -9,11 +9,12 @@ public interface IRestaurantServicePort {
 
     List<Restaurant> getAllRestaurants();
 
+    Restaurant getRestaurantById(Integer id);
+
     Restaurant getRestaurantByNit(String nit);
 
-    Restaurant getRestaurantByName(String name);
 
     Restaurant updateRestaurant(Restaurant restaurant);
 
-    void deleteRestaurantByNit(String nit);
+    void deleteRestaurantById(Integer id);
 }

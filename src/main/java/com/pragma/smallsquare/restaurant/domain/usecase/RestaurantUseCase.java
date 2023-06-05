@@ -30,8 +30,8 @@ public class RestaurantUseCase implements IRestaurantServicePort {
     }
 
     @Override
-    public Restaurant getRestaurantByName(String name) {
-        return restaurantPersistencePort.getRestaurantByName(name);
+    public Restaurant getRestaurantById(Integer id) {
+        return restaurantPersistencePort.getRestaurantById(id);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class RestaurantUseCase implements IRestaurantServicePort {
     }
 
     @Override
-    public void deleteRestaurantByNit(String nit) {
-        restaurantPersistencePort.deleteRestaurantByNit(nit);
+    public void deleteRestaurantById(Integer id) {
+        restaurantPersistencePort.deleteRestaurantById(id);
     }
 }

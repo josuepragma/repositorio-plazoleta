@@ -9,11 +9,11 @@ public interface IRestaurantPersistencePort {
 
     List<Restaurant> getAllRestaurants();
 
-    Restaurant getRestaurantByNit(String nit);
+    Restaurant getRestaurantById(Integer id);
 
-    Restaurant getRestaurantByName(String name);
+    Restaurant getRestaurantByNit(String nit);
 
     Restaurant updateRestaurant(Restaurant restaurant);
 
-    void deleteRestaurantByNit(String nit);
+    void deleteRestaurantById(Integer id);
 }

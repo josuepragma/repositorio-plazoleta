@@ -2,8 +2,9 @@ package com.pragma.smallsquare.restaurant.insfrastructure.input.rest;
 
 import com.pragma.smallsquare.restaurant.application.dto.RestaurantRequestDto;
 import com.pragma.smallsquare.restaurant.application.dto.RestaurantResponseDto;
+import com.pragma.smallsquare.restaurant.application.dto.UserResponseDto;
 import com.pragma.smallsquare.restaurant.application.handler.IRestaurantHandler;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.RestaurantEntity;
+import com.pragma.smallsquare.restaurant.insfrastructure.exceptions.UserIsNoOwnerException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,13 @@ public class RestaurantRestController {
 
     @PostMapping("/")
     public ResponseEntity<Void> saveRestaurantInSmallSquare(@Valid @RequestBody RestaurantRequestDto restaurantRequest) {
-        restaurantHandler.saveRestaurantDto(restaurantRequest);
 
+        UserResponseDto owner = restaurantHandler.getOwnerUser(restaurantRequest.getIdOwner());
+        if(!owner.getRole().equals("Propietario")) {
+            throw new UserIsNoOwnerException("IdOwner does not belong an owner user");
+        }
+
+        restaurantHandler.saveRestaurantDto(restaurantRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -31,9 +37,9 @@ public class RestaurantRestController {
         return ResponseEntity.ok(restaurantHandler.getAllRestaurantsDto());
     }
 
-    @GetMapping("/{nit}")
-    public ResponseEntity<RestaurantResponseDto> getRestaurantByNit(@PathVariable(name = "nit") String nit) {
-        return ResponseEntity.ok(restaurantHandler.getRestaurantDtoByNit(nit));
+    @GetMapping("/{id}")
+    public ResponseEntity<RestaurantResponseDto> getRestaurantById(@PathVariable(name = "id") Integer id) {
+        return ResponseEntity.ok(restaurantHandler.getRestaurantDtoById(id));
     }
 
 }

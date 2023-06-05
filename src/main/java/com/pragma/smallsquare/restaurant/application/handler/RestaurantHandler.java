@@ -2,11 +2,15 @@ package com.pragma.smallsquare.restaurant.application.handler;
 
 import com.pragma.smallsquare.restaurant.application.dto.RestaurantRequestDto;
 import com.pragma.smallsquare.restaurant.application.dto.RestaurantResponseDto;
+import com.pragma.smallsquare.restaurant.application.dto.UserResponseDto;
 import com.pragma.smallsquare.restaurant.application.mapper.IRestaurantRequestMapper;
 import com.pragma.smallsquare.restaurant.application.mapper.IRestaurantResponseMapper;
 import com.pragma.smallsquare.restaurant.domain.api.IRestaurantServicePort;
 import com.pragma.smallsquare.restaurant.domain.model.Restaurant;
+import com.pragma.smallsquare.restaurant.insfrastructure.feign.client.IUserFeignClient;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +19,17 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class RestaurantHandler implements IRestaurantHandler{
+public class RestaurantHandler implements IRestaurantHandler {
 
     private final IRestaurantServicePort restaurantServicePort;
     private final IRestaurantRequestMapper restaurantRequestMapper;
     private final IRestaurantResponseMapper restaurantResponseMapper;
+
+    private final IUserFeignClient userFeignClient;
+
+    public UserResponseDto getOwnerUser(Integer id) {
+        return userFeignClient.getOwnerUserById(id);
+    }
 
     @Override
     public void saveRestaurantDto(RestaurantRequestDto restaurantRequestDto) {
@@ -34,6 +44,13 @@ public class RestaurantHandler implements IRestaurantHandler{
     }
 
     @Override
+    public RestaurantResponseDto getRestaurantDtoById(Integer id) {
+        Restaurant restaurant = restaurantServicePort.getRestaurantById(id);
+
+        return restaurantResponseMapper.toResponseDto(restaurant);
+    }
+
+    @Override
     public RestaurantResponseDto getRestaurantDtoByNit(String nit) {
         Restaurant restaurant = restaurantServicePort.getRestaurantByNit(nit);
 
@@ -41,24 +58,20 @@ public class RestaurantHandler implements IRestaurantHandler{
     }
 
     @Override
-    public RestaurantResponseDto getRestaurantDtoByName(String name) {
-        Restaurant restaurant = restaurantServicePort.getRestaurantByName(name);
+    public void updateRestaurantDto(RestaurantRequestDto restaurantRequestDto, Integer id) {
+        Restaurant modifiedRestaurant = restaurantServicePort.getRestaurantById(id);
+        modifiedRestaurant.setName(restaurantRequestDto.getName());
+        modifiedRestaurant.setNit(restaurantRequestDto.getNit());
+        modifiedRestaurant.setAddress(restaurantRequestDto.getAddress());
+        modifiedRestaurant.setPhone(restaurantRequestDto.getPhone());
+        modifiedRestaurant.setUrlLogo(restaurantRequestDto.getUrlLogo());
+        modifiedRestaurant.setIdOwner(restaurantRequestDto.getIdOwner());
 
-        return restaurantResponseMapper.toResponseDto(restaurant);
+        restaurantServicePort.updateRestaurant(modifiedRestaurant);
     }
 
     @Override
-    public void updateRestaurantDto(RestaurantRequestDto restaurantRequestDto) {
-        Restaurant oldRestaurant = restaurantServicePort.getRestaurantByNit(restaurantRequestDto.getNit());
-
-        Restaurant newRestaurant = restaurantRequestMapper.toRestaurant(restaurantRequestDto);
-        newRestaurant.setId(oldRestaurant.getId());
-
-        restaurantServicePort.updateRestaurant(newRestaurant);
-    }
-
-    @Override
-    public void deleteRestaurantDtoByNit(String nit) {
-        restaurantServicePort.deleteRestaurantByNit(nit);
+    public void deleteRestaurantDtoById(Integer id) {
+        restaurantServicePort.deleteRestaurantById(id);
     }
 }
