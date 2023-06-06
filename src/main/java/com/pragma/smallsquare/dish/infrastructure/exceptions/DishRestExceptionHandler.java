@@ -3,6 +3,8 @@ package com.pragma.smallsquare.dish.infrastructure.exceptions;
 
 import com.pragma.smallsquare.restaurant.insfrastructure.exceptions.*;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class DishRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Override
@@ -40,6 +43,24 @@ public class DishRestExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(body, headers, status);
     }
+
+//    @Override
+//    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+//                                                                  HttpHeaders headers,
+//                                                                  HttpStatus status,
+//                                                                  WebRequest request) {
+//        Map<String, List<String>> body = new HashMap<>();
+//
+//        List<String> errors = ex.getBindingResult()
+//                .getFieldErrors()
+//                .stream()
+//                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+//                .collect(Collectors.toList());
+//
+//        body.put("errors", errors);
+//
+//        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+//    }
 
     @ExceptionHandler(DishAlreadyExistsException.class)
     protected ResponseEntity<Object> handleDishAlreadyExistsException(DishAlreadyExistsException ex) {

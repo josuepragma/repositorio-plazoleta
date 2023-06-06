@@ -16,6 +16,7 @@ public interface IDishResponseMapper {
 
     default DishResponseDto toResponseDto(Dish dish, Category category) {
         DishResponseDto dishResponseDto = new DishResponseDto();
+        dishResponseDto.setId(dish.getId());
         dishResponseDto.setName(dish.getName());
         dishResponseDto.setPrice(dish.getPrice());
         dishResponseDto.setDescription(dish.getDescription());
@@ -32,6 +33,7 @@ public interface IDishResponseMapper {
         return dishList.stream()
                 .map(dishParam -> {
                     DishResponseDto dishResponseDto = new DishResponseDto();
+                    dishResponseDto.setId(dishParam.getId());
                     dishResponseDto.setName(dishParam.getName());
                     dishResponseDto.setPrice(dishParam.getPrice());
                     dishResponseDto.setDescription(dishParam.getDescription());

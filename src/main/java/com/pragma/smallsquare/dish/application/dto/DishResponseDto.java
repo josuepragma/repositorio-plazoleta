@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DishResponseDto {
+    Integer id;
     String name;
     String category;
 //    Integer idCategory;

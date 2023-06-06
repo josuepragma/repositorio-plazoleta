@@ -3,6 +3,7 @@ package com.pragma.smallsquare.dish.application.handler;
 import com.pragma.smallsquare.category.domain.api.ICategoryServicePort;
 import com.pragma.smallsquare.category.domain.model.Category;
 import com.pragma.smallsquare.dish.application.dto.DishRequestDto;
+import com.pragma.smallsquare.dish.application.dto.DishRequestDto2Update;
 import com.pragma.smallsquare.dish.application.dto.DishResponseDto;
 import com.pragma.smallsquare.dish.application.mapper.IDishRequestMapper;
 import com.pragma.smallsquare.dish.application.mapper.IDishResponseMapper;
@@ -31,7 +32,7 @@ public class DishHandler implements IDishHandler{
         dish.setIdCategory(category.getId());
         dish.setActive(true);
 
-        //  Modify at the future in order to do HU-04
+        //  Modify at the future in order to do HU-05
         dish.setIdRestaurant(1);
 
         dishServicePort.saveDish(dish);
@@ -59,16 +60,10 @@ public class DishHandler implements IDishHandler{
     }
 
     @Override
-    public void updateDishDto(DishRequestDto dishRequestDto, Integer id) {
+    public void updateDishDto(DishRequestDto2Update dishRequestDto2Update, Integer id) {
         Dish updatedDish = dishServicePort.getDishById(id);
-        updatedDish.setName(dishRequestDto.getName());
-        updatedDish.setDescription(dishRequestDto.getDescription());
-        updatedDish.setPrice(dishRequestDto.getPrice());
-        updatedDish.setUrlImage(dishRequestDto.getUrlImage());
-
-        //  Modify at the future in order to do HU-04
-        updatedDish.setIdRestaurant(1);
-        updatedDish.setIdCategory(4);
+        updatedDish.setDescription(dishRequestDto2Update.getDescription());
+        updatedDish.setPrice(dishRequestDto2Update.getPrice());
 
         dishServicePort.updateDish(updatedDish);
     }

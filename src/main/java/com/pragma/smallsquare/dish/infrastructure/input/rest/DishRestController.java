@@ -4,6 +4,7 @@ import com.pragma.smallsquare.category.application.dto.CategoryResponseDto;
 import com.pragma.smallsquare.category.application.handler.ICategoryHandler;
 import com.pragma.smallsquare.category.infrastructure.exceptions.CategoryNotFoundException;
 import com.pragma.smallsquare.dish.application.dto.DishRequestDto;
+import com.pragma.smallsquare.dish.application.dto.DishRequestDto2Update;
 import com.pragma.smallsquare.dish.application.dto.DishResponseDto;
 import com.pragma.smallsquare.dish.application.handler.IDishHandler;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,21 @@ public class DishRestController {
     @GetMapping("/{id}")
     public ResponseEntity<DishResponseDto> getDishById(@PathVariable(name = "id") Integer id) {
         return ResponseEntity.ok(dishHandler.getDishDtoById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateDish(@Valid @RequestBody DishRequestDto2Update dishRequestDto2Update,
+                                           @PathVariable(name = "id") Integer id) {
+        dishHandler.updateDishDto(dishRequestDto2Update, id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDish(@PathVariable(name = "id") Integer id) {
+        dishHandler.deleteDishDtoById(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
