@@ -13,7 +13,6 @@ public interface IRestaurantServicePort {
 
     Restaurant getRestaurantByNit(String nit);
 
-
     Restaurant updateRestaurant(Restaurant restaurant);
 
     void deleteRestaurantById(Integer id);

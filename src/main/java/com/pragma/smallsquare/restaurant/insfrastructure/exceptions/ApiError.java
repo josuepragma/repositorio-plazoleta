@@ -16,22 +16,22 @@ public class ApiError {
     private HttpStatus status;
     private String message;
 
-    private ApiError() {
+    ApiError() {
         timestamp = LocalDateTime.now();
     }
 
-    ApiError(HttpStatus status) {
+    public ApiError(HttpStatus status) {
         this();
         this.status = status;
     }
 
-    ApiError(HttpStatus status, Throwable ex) {
+    public ApiError(HttpStatus status, Throwable ex) {
         this();
         this.status = status;
         this.message = ex.getMessage();
     }
 
-    ApiError(HttpStatus status, String message) {
+    public ApiError(HttpStatus status, String message) {
         this();
         this.status = status;
         this.message = message;

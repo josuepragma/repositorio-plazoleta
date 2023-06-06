@@ -9,8 +9,6 @@ import com.pragma.smallsquare.restaurant.domain.api.IRestaurantServicePort;
 import com.pragma.smallsquare.restaurant.domain.model.Restaurant;
 import com.pragma.smallsquare.restaurant.insfrastructure.feign.client.IUserFeignClient;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +25,7 @@ public class RestaurantHandler implements IRestaurantHandler {
 
     private final IUserFeignClient userFeignClient;
 
+    @Override
     public UserResponseDto getOwnerUser(Integer id) {
         return userFeignClient.getOwnerUserById(id);
     }
