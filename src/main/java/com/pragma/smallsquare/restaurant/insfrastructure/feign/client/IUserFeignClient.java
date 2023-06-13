@@ -1,6 +1,6 @@
 package com.pragma.smallsquare.restaurant.insfrastructure.feign.client;
 
-import com.pragma.smallsquare.restaurant.application.dto.UserResponseDto;
+import com.pragma.smallsquare.restaurant.application.dto.response.UserResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface IUserFeignClient {
 
     @GetMapping("/user/{id}")
-    public UserResponseDto getOwnerUserById(@PathVariable Integer id);
+    public UserResponseDto getUserById(@PathVariable Integer id);
 
 }
