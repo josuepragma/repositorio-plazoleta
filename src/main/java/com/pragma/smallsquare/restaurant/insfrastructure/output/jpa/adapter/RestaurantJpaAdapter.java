@@ -9,6 +9,9 @@ import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.Resta
 import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.mapper.IRestaurantEntityMapper;
 import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.repository.IRestaurantRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -34,6 +37,19 @@ public class RestaurantJpaAdapter implements IRestaurantPersistencePort {
 
         if (restaurantEntityList.isEmpty()) {
             throw new NoDataFoundException("Restaurant List is empty");
+        }
+
+        return restaurantEntityMapper.toRestaurantList(restaurantEntityList);
+    }
+
+    @Override
+    public List<Restaurant> getAllRestaurantsOrderByName(int page, int size) {
+//        Pageable pageable = PageRequest.of(page, size, Sort.by("name"));
+        Pageable pageable = PageRequest.of(page, size);
+        List<RestaurantEntity> restaurantEntityList = restaurantRepository.findAllByOrderByName(pageable);
+
+        if (restaurantEntityList.isEmpty()) {
+            throw new NoDataFoundException("There is no restaurants in page number : " + page);
         }
 
         return restaurantEntityMapper.toRestaurantList(restaurantEntityList);

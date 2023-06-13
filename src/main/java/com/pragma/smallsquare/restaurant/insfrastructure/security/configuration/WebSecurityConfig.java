@@ -26,7 +26,7 @@ public class WebSecurityConfig {
     private static final String ROLE_ADMIN = "ADMINISTRADOR";
     private static final String ROLE_OWNER = "PROPIETARIO";
     private static final String ROLE_EMPLOYEE = "EMPLEADO";
-    private static final String ROLE_CLIENT = "CLIENTE";
+    private static final String ROLE_CUSTOMER = "CLIENTE";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -44,10 +44,11 @@ public class WebSecurityConfig {
                         "/webjars/**",
                         "/swagger-ui.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/small-square/restaurant/**").hasRole(ROLE_ADMIN)
-                .antMatchers(HttpMethod.GET, "/small-square/restaurant/**").hasAnyRole(ROLE_ADMIN, ROLE_OWNER)
+                .antMatchers(HttpMethod.GET, "/small-square/restaurant/").hasAnyRole(ROLE_ADMIN, ROLE_OWNER)
                 .antMatchers(HttpMethod.POST, "/small-square/dish/**").hasRole(ROLE_OWNER)
                 .antMatchers(HttpMethod.GET, "/small-square/dish/**").hasAnyRole(ROLE_ADMIN, ROLE_OWNER)
                 .antMatchers(HttpMethod.PUT, "/small-square/dish/**").hasRole(ROLE_OWNER)
+                .antMatchers(HttpMethod.GET, "/small-square/restaurant/list**").hasAnyRole(ROLE_CUSTOMER)
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

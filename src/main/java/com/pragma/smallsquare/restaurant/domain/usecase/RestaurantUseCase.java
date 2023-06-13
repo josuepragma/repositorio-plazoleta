@@ -25,6 +25,11 @@ public class RestaurantUseCase implements IRestaurantServicePort {
     }
 
     @Override
+    public List<Restaurant> getAllRestaurantsOrderByName(int startPage, int size) {
+        return restaurantPersistencePort.getAllRestaurantsOrderByName(startPage, size);
+    }
+
+    @Override
     public Restaurant getRestaurantByNit(String nit) {
         return restaurantPersistencePort.getRestaurantByNit(nit);
     }

@@ -9,6 +9,8 @@ public interface IRestaurantPersistencePort {
 
     List<Restaurant> getAllRestaurants();
 
+    List<Restaurant> getAllRestaurantsOrderByName(int startPage, int size);
+
     Restaurant getRestaurantById(Integer id);
 
     Restaurant getRestaurantByNit(String nit);

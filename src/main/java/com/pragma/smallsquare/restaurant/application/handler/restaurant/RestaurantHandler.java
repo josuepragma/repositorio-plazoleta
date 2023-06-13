@@ -2,10 +2,12 @@ package com.pragma.smallsquare.restaurant.application.handler.restaurant;
 
 import com.pragma.smallsquare.restaurant.application.dto.request.RestaurantRequestDto;
 import com.pragma.smallsquare.restaurant.application.dto.response.RestaurantResponseDto;
+import com.pragma.smallsquare.restaurant.application.dto.response.RestaurantSortResponseDto;
 import com.pragma.smallsquare.restaurant.application.dto.response.UserResponseDto;
 import com.pragma.smallsquare.restaurant.application.handler.restaurant.IRestaurantHandler;
 import com.pragma.smallsquare.restaurant.application.mapper.IRestaurantRequestMapper;
 import com.pragma.smallsquare.restaurant.application.mapper.IRestaurantResponseMapper;
+import com.pragma.smallsquare.restaurant.application.mapper.IRestaurantSortResponseMapper;
 import com.pragma.smallsquare.restaurant.domain.api.IRestaurantServicePort;
 import com.pragma.smallsquare.restaurant.domain.model.Restaurant;
 import com.pragma.smallsquare.restaurant.insfrastructure.exceptions.UserIsNoOwnerException;
@@ -24,6 +26,7 @@ public class RestaurantHandler implements IRestaurantHandler {
     private final IRestaurantServicePort restaurantServicePort;
     private final IRestaurantRequestMapper restaurantRequestMapper;
     private final IRestaurantResponseMapper restaurantResponseMapper;
+    private final IRestaurantSortResponseMapper restaurantSortResponseMapper;
 
     private final IUserFeignClient userFeignClient;
 
@@ -42,6 +45,14 @@ public class RestaurantHandler implements IRestaurantHandler {
     @Override
     public List<RestaurantResponseDto> getAllRestaurantsDto() {
         return restaurantResponseMapper.toResponseDtoList(restaurantServicePort.getAllRestaurants());
+    }
+
+    @Override
+    public List<RestaurantSortResponseDto> getAllRestaurantsDtoOrderByName(
+            int page, int size) {
+        List<Restaurant> restaurants = restaurantServicePort.getAllRestaurantsOrderByName(page, size);
+
+        return restaurantSortResponseMapper.toResponseList(restaurants);
     }
 
     @Override
