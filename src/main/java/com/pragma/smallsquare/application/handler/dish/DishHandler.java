@@ -65,6 +65,15 @@ public class DishHandler implements IDishHandler {
     }
 
     @Override
+    public List<DishResponseDto> getAllDishesByIdRestaurantAndIdCategory(Integer idRestaurant, Integer idCategory,
+                                                                         int page, int size) {
+        List<Dish> dishList = dishServicePort
+                .getAllDishesByIdRestaurantAndIdCategory(idRestaurant, idCategory, page, size);
+
+        return dishResponseMapper.toResponseDtoList(dishList);
+    }
+
+    @Override
     public DishResponseDto getDishDtoById(Integer id) {
         Dish dish = dishServicePort.getDishById(id);
 

@@ -95,6 +95,27 @@ public class DishRestController {
         return ResponseEntity.ok(dishHandler.getAllDishesDto());
     }
 
+    @Operation(summary = "List all Dishes By Category")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. Dishes found successfully",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = DishResponseDto.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST. Request is invalid", content = @Content),
+            @ApiResponse(responseCode = "401", description = "UNAUTHORIZED. User is not authorized", content = @Content),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND. Dishes not found", content = @Content),
+            @ApiResponse(responseCode = "403", description = "FORBIDDEN. User has no permissions", content = @Content)
+    })
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping(value = "/dish/restaurant/{idRestaurant}/category/{idCategory}/list",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<DishResponseDto>> getAllDishesByRestaurantAndCategory(
+            @PathVariable(value = "idRestaurant") Integer idRestaurant,
+            @PathVariable(value = "idCategory") Integer idCategory,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size) {
+        return ResponseEntity.ok(dishHandler.getAllDishesByIdRestaurantAndIdCategory(idRestaurant, idCategory, page, size));
+    }
+
     @Operation(summary = "Get Dish by Id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK. Dish found successfully",

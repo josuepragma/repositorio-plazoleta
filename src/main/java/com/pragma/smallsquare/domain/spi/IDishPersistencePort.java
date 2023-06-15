@@ -9,6 +9,8 @@ public interface IDishPersistencePort {
 
     List<Dish> getAllDishes();
 
+    List<Dish> getAllDishesByIdRestaurantAndIdCategory(Integer idRestaurant, Integer idCategory, int page, int size);
+
     Dish getDishById(Integer id);
 
     Dish getDishByName(String name);

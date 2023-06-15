@@ -2,13 +2,17 @@ package com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.adapter;
 
 import com.pragma.smallsquare.restaurant.domain.model.Dish;
 import com.pragma.smallsquare.restaurant.domain.spi.IDishPersistencePort;
-import com.pragma.smallsquare.restaurant.insfrastructure.exceptions.DishAlreadyExistsException;
-import com.pragma.smallsquare.restaurant.insfrastructure.exceptions.DishNotFoundException;
+import com.pragma.smallsquare.restaurant.insfrastructure.exceptions.*;
+import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.CategoryEntity;
 import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.DishEntity;
+import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.RestaurantEntity;
 import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.mapper.IDishEntityMapper;
+import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.repository.ICategoryRepository;
 import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.repository.IDishRepository;
-import com.pragma.smallsquare.restaurant.insfrastructure.exceptions.NoDataFoundException;
+import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.repository.IRestaurantRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -17,6 +21,9 @@ public class DishJpaAdapter implements IDishPersistencePort {
 
     private final IDishRepository dishRepository;
     private final IDishEntityMapper dishEntityMapper;
+
+    private final IRestaurantRepository restaurantRepository;
+    private final ICategoryRepository categoryRepository;
 
     @Override
     public void saveDish(Dish dish) {
@@ -34,6 +41,32 @@ public class DishJpaAdapter implements IDishPersistencePort {
 
         if (dishEntityList.isEmpty()) {
             throw new NoDataFoundException("Dish List is empty");
+        }
+
+        return dishEntityMapper.toDishList(dishEntityList);
+    }
+
+    @Override
+    public List<Dish> getAllDishesByIdRestaurantAndIdCategory(Integer idRestaurant,
+                                                              Integer idCategory,
+                                                              int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        RestaurantEntity restaurant = restaurantRepository.findById(idRestaurant)
+                .orElseThrow(() -> new RestaurantNotFoundException("Id Restaurant Not Found"));
+
+        CategoryEntity category = categoryRepository.findById(idCategory)
+                .orElseThrow(() -> new CategoryNotFoundException("Id Category Not Found"));
+
+        List<DishEntity> dishEntityList = dishRepository
+                .findAllByRestaurantAndCategory(restaurant, category, pageable);
+
+        if (dishEntityList.isEmpty()) {
+            throw new NoDataFoundException("There is no DISHES" +
+                    " in Restaurant: " + restaurant.getName() +
+                    " with category: " + category.getName() +
+                    " in page: " + page);
         }
 
         return dishEntityMapper.toDishList(dishEntityList);
