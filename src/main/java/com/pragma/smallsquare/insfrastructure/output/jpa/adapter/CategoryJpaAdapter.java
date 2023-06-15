@@ -1,12 +1,12 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.adapter;
+package com.pragma.smallsquare.insfrastructure.output.jpa.adapter;
 
-import com.pragma.smallsquare.restaurant.domain.model.Category;
-import com.pragma.smallsquare.restaurant.domain.spi.ICategoryPersistencePort;
-import com.pragma.smallsquare.restaurant.insfrastructure.exceptions.CategoryNotFoundException;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.CategoryEntity;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.mapper.ICategoryEntityMapper;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.repository.ICategoryRepository;
-import com.pragma.smallsquare.restaurant.insfrastructure.exceptions.NoDataFoundException;
+import com.pragma.smallsquare.insfrastructure.exceptions.CategoryNotFoundException;
+import com.pragma.smallsquare.insfrastructure.output.jpa.repository.ICategoryRepository;
+import com.pragma.smallsquare.domain.model.Category;
+import com.pragma.smallsquare.domain.spi.ICategoryPersistencePort;
+import com.pragma.smallsquare.insfrastructure.output.jpa.entity.CategoryEntity;
+import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.ICategoryEntityMapper;
+import com.pragma.smallsquare.insfrastructure.exceptions.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

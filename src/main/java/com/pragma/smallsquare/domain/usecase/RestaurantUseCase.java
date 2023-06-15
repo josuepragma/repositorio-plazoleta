@@ -1,8 +1,8 @@
-package com.pragma.smallsquare.restaurant.domain.usecase;
+package com.pragma.smallsquare.domain.usecase;
 
-import com.pragma.smallsquare.restaurant.domain.api.IRestaurantServicePort;
-import com.pragma.smallsquare.restaurant.domain.model.Restaurant;
-import com.pragma.smallsquare.restaurant.domain.spi.IRestaurantPersistencePort;
+import com.pragma.smallsquare.domain.api.IRestaurantServicePort;
+import com.pragma.smallsquare.domain.model.Restaurant;
+import com.pragma.smallsquare.domain.spi.IRestaurantPersistencePort;
 
 import java.util.List;
 
@@ -20,18 +20,8 @@ public class RestaurantUseCase implements IRestaurantServicePort {
     }
 
     @Override
-    public List<Restaurant> getAllRestaurants() {
-        return restaurantPersistencePort.getAllRestaurants();
-    }
-
-    @Override
     public List<Restaurant> getAllRestaurantsOrderByName(int startPage, int size) {
         return restaurantPersistencePort.getAllRestaurantsOrderByName(startPage, size);
-    }
-
-    @Override
-    public Restaurant getRestaurantByNit(String nit) {
-        return restaurantPersistencePort.getRestaurantByNit(nit);
     }
 
     @Override
@@ -39,13 +29,4 @@ public class RestaurantUseCase implements IRestaurantServicePort {
         return restaurantPersistencePort.getRestaurantById(id);
     }
 
-    @Override
-    public Restaurant updateRestaurant(Restaurant restaurant) {
-        return restaurantPersistencePort.updateRestaurant(restaurant);
-    }
-
-    @Override
-    public void deleteRestaurantById(Integer id) {
-        restaurantPersistencePort.deleteRestaurantById(id);
-    }
 }

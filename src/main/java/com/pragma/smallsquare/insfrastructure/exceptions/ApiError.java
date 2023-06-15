@@ -1,4 +1,4 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.exceptions;
+package com.pragma.smallsquare.insfrastructure.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package com.pragma.smallsquare.restaurant.application.handler.category;
+package com.pragma.smallsquare.application.handler.category;
 
-import com.pragma.smallsquare.restaurant.application.dto.response.CategoryResponseDto;
+import com.pragma.smallsquare.application.dto.response.CategoryResponseDto;
 
 import java.util.List;
 

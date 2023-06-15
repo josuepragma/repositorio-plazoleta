@@ -1,15 +1,15 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.adapter;
+package com.pragma.smallsquare.insfrastructure.output.jpa.adapter;
 
-import com.pragma.smallsquare.restaurant.domain.model.Dish;
-import com.pragma.smallsquare.restaurant.domain.spi.IDishPersistencePort;
-import com.pragma.smallsquare.restaurant.insfrastructure.exceptions.*;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.CategoryEntity;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.DishEntity;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.RestaurantEntity;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.mapper.IDishEntityMapper;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.repository.ICategoryRepository;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.repository.IDishRepository;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.repository.IRestaurantRepository;
+import com.pragma.smallsquare.domain.model.Dish;
+import com.pragma.smallsquare.domain.spi.IDishPersistencePort;
+import com.pragma.smallsquare.insfrastructure.exceptions.*;
+import com.pragma.smallsquare.insfrastructure.output.jpa.entity.CategoryEntity;
+import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.IDishEntityMapper;
+import com.pragma.smallsquare.insfrastructure.output.jpa.repository.ICategoryRepository;
+import com.pragma.smallsquare.insfrastructure.output.jpa.repository.IDishRepository;
+import com.pragma.smallsquare.insfrastructure.output.jpa.entity.DishEntity;
+import com.pragma.smallsquare.insfrastructure.output.jpa.entity.RestaurantEntity;
+import com.pragma.smallsquare.insfrastructure.output.jpa.repository.IRestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,17 +33,6 @@ public class DishJpaAdapter implements IDishPersistencePort {
 
         DishEntity dishEntity = dishEntityMapper.toEntity(dish);
         dishRepository.save(dishEntity);
-    }
-
-    @Override
-    public List<Dish> getAllDishes() {
-        List<DishEntity> dishEntityList = dishRepository.findAll();
-
-        if (dishEntityList.isEmpty()) {
-            throw new NoDataFoundException("Dish List is empty");
-        }
-
-        return dishEntityMapper.toDishList(dishEntityList);
     }
 
     @Override
@@ -81,20 +70,8 @@ public class DishJpaAdapter implements IDishPersistencePort {
     }
 
     @Override
-    public Dish getDishByName(String name) {
-        DishEntity dishEntity = dishRepository.findByName(name)
-                .orElseThrow(() -> new DishNotFoundException("Dish searched doesn't exist with NAME = " + name));
-
-        return dishEntityMapper.toDish(dishEntity);
-    }
-
-    @Override
     public void updateDish(Dish dish) {
         dishRepository.save(dishEntityMapper.toEntity(dish));
     }
 
-    @Override
-    public void deleteDishById(Integer id) {
-        dishRepository.deleteById(id);
-    }
 }

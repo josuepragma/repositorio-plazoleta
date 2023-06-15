@@ -1,6 +1,6 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.feign.client;
+package com.pragma.smallsquare.insfrastructure.feign.client;
 
-import com.pragma.smallsquare.restaurant.application.dto.response.UserResponseDto;
+import com.pragma.smallsquare.application.dto.response.UserResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,4 +1,4 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.security.service;
+package com.pragma.smallsquare.insfrastructure.security.service;
 
 public class JwtContextHolder {
 

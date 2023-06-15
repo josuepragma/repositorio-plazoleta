@@ -1,4 +1,4 @@
-package com.pragma.smallsquare.restaurant.domain.model;
+package com.pragma.smallsquare.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

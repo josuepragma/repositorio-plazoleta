@@ -1,4 +1,4 @@
-package com.pragma.smallsquare.restaurant.application.dto.response;
+package com.pragma.smallsquare.application.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

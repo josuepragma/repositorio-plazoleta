@@ -1,4 +1,4 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.security.service;
+package com.pragma.smallsquare.insfrastructure.security.service;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.userdetails.User;

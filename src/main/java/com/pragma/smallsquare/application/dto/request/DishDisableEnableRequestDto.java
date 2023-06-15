@@ -1,4 +1,4 @@
-package com.pragma.smallsquare.restaurant.application.dto.request;
+package com.pragma.smallsquare.application.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +9,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class DishDisableEnableRequestDto {
 
-    @NotNull(message = "ACTIVE STATUS field is required. True or False")
+    @NotNull(message = "ACTIVE field is required. True or False")
     Boolean active;
 }

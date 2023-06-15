@@ -1,6 +1,6 @@
-package com.pragma.smallsquare.restaurant.domain.spi;
+package com.pragma.smallsquare.domain.spi;
 
-import com.pragma.smallsquare.restaurant.domain.model.Category;
+import com.pragma.smallsquare.domain.model.Category;
 
 import java.util.List;
 

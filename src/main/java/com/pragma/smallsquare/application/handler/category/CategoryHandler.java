@@ -1,9 +1,9 @@
-package com.pragma.smallsquare.restaurant.application.handler.category;
+package com.pragma.smallsquare.application.handler.category;
 
-import com.pragma.smallsquare.restaurant.application.dto.response.CategoryResponseDto;
-import com.pragma.smallsquare.restaurant.application.mapper.ICategoryResponseMapper;
-import com.pragma.smallsquare.restaurant.domain.api.ICategoryServicePort;
-import com.pragma.smallsquare.restaurant.domain.model.Category;
+import com.pragma.smallsquare.application.dto.response.CategoryResponseDto;
+import com.pragma.smallsquare.application.mapper.ICategoryResponseMapper;
+import com.pragma.smallsquare.domain.api.ICategoryServicePort;
+import com.pragma.smallsquare.domain.model.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

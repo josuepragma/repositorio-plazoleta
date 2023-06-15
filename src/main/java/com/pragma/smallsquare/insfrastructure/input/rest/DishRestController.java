@@ -1,10 +1,10 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.input.rest;
+package com.pragma.smallsquare.insfrastructure.input.rest;
 
-import com.pragma.smallsquare.restaurant.application.dto.request.DishDisableEnableRequestDto;
-import com.pragma.smallsquare.restaurant.application.dto.request.DishRequestDto;
-import com.pragma.smallsquare.restaurant.application.dto.request.DishModifyRequestDto;
-import com.pragma.smallsquare.restaurant.application.dto.response.DishResponseDto;
-import com.pragma.smallsquare.restaurant.application.handler.dish.IDishHandler;
+import com.pragma.smallsquare.application.dto.request.DishRequestDto;
+import com.pragma.smallsquare.application.dto.request.DishDisableEnableRequestDto;
+import com.pragma.smallsquare.application.dto.request.DishModifyRequestDto;
+import com.pragma.smallsquare.application.dto.response.DishResponseDto;
+import com.pragma.smallsquare.application.handler.dish.IDishHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -79,23 +79,7 @@ public class DishRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @Operation(summary = "List all Dishes")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK. Dishes found successfully",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = DishResponseDto.class))),
-            @ApiResponse(responseCode = "400", description = "BAD REQUEST. Request is invalid", content = @Content),
-            @ApiResponse(responseCode = "401", description = "UNAUTHORIZED. User is not authorized", content = @Content),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND. Dishes not found", content = @Content),
-            @ApiResponse(responseCode = "403", description = "FORBIDDEN. User has no permissions", content = @Content)
-    })
-    @SecurityRequirement(name = "Bearer Authentication")
-    @GetMapping(value = "/dish/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<DishResponseDto>> getAllDishes() {
-        return ResponseEntity.ok(dishHandler.getAllDishesDto());
-    }
-
-    @Operation(summary = "List all Dishes By Category")
+    @Operation(summary = "List all Dishes By Restaurant and Category")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK. Dishes found successfully",
                     content = @Content(mediaType = "application/json",
@@ -132,18 +116,4 @@ public class DishRestController {
         return ResponseEntity.ok(dishHandler.getDishDtoById(id));
     }
 
-    @Operation(summary = "Delete Dish by Id")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "NO CONTENT. Dish deleted successfully", content = @Content),
-            @ApiResponse(responseCode = "401", description = "UNAUTHORIZED. User is not authorized", content = @Content),
-            @ApiResponse(responseCode = "400", description = "BAD REQUEST. Request is invalid", content = @Content),
-            @ApiResponse(responseCode = "403", description = "FORBIDDEN. User has no permissions", content = @Content)
-    })
-    @SecurityRequirement(name = "Bearer Authentication")
-    @DeleteMapping(value = "/dish/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> deleteDish(@PathVariable(name = "id") Integer id) {
-        dishHandler.deleteDishDtoById(id);
-
-        return ResponseEntity.noContent().build();
-    }
 }

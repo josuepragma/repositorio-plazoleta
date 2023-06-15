@@ -1,7 +1,7 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.mapper;
+package com.pragma.smallsquare.insfrastructure.output.jpa.mapper;
 
-import com.pragma.smallsquare.restaurant.domain.model.Restaurant;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.RestaurantEntity;
+import com.pragma.smallsquare.domain.model.Restaurant;
+import com.pragma.smallsquare.insfrastructure.output.jpa.entity.RestaurantEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

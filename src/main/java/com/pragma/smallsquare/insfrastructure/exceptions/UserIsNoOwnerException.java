@@ -1,4 +1,4 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.exceptions;
+package com.pragma.smallsquare.insfrastructure.exceptions;
 
 public class UserIsNoOwnerException extends RuntimeException{
     public UserIsNoOwnerException(String message) {

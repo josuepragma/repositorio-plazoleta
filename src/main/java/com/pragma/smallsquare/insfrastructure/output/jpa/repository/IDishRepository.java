@@ -1,8 +1,8 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.repository;
+package com.pragma.smallsquare.insfrastructure.output.jpa.repository;
 
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.CategoryEntity;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.DishEntity;
-import com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity.RestaurantEntity;
+import com.pragma.smallsquare.insfrastructure.output.jpa.entity.CategoryEntity;
+import com.pragma.smallsquare.insfrastructure.output.jpa.entity.DishEntity;
+import com.pragma.smallsquare.insfrastructure.output.jpa.entity.RestaurantEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 

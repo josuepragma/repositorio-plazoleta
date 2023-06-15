@@ -1,8 +1,8 @@
-package com.pragma.smallsquare.restaurant.domain.usecase;
+package com.pragma.smallsquare.domain.usecase;
 
-import com.pragma.smallsquare.restaurant.domain.api.ICategoryServicePort;
-import com.pragma.smallsquare.restaurant.domain.model.Category;
-import com.pragma.smallsquare.restaurant.domain.spi.ICategoryPersistencePort;
+import com.pragma.smallsquare.domain.api.ICategoryServicePort;
+import com.pragma.smallsquare.domain.model.Category;
+import com.pragma.smallsquare.domain.spi.ICategoryPersistencePort;
 
 import java.util.List;
 

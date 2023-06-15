@@ -1,4 +1,4 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.exceptions;
+package com.pragma.smallsquare.insfrastructure.exceptions;
 
 public class DishAlreadyExistsException extends RuntimeException {
     public DishAlreadyExistsException(String message) {

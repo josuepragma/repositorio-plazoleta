@@ -1,12 +1,13 @@
-package com.pragma.smallsquare.restaurant.application.dto.response;
+package com.pragma.smallsquare.application.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class DishResponseDto {
-    Integer id;
     String name;
     String category;
     String description;

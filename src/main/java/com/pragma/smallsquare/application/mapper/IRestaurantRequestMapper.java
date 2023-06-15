@@ -1,7 +1,7 @@
-package com.pragma.smallsquare.restaurant.application.mapper;
+package com.pragma.smallsquare.application.mapper;
 
-import com.pragma.smallsquare.restaurant.application.dto.request.RestaurantRequestDto;
-import com.pragma.smallsquare.restaurant.domain.model.Restaurant;
+import com.pragma.smallsquare.application.dto.request.RestaurantRequestDto;
+import com.pragma.smallsquare.domain.model.Restaurant;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

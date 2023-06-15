@@ -1,20 +1,20 @@
-package com.pragma.smallsquare.restaurant.application.handler.dish;
+package com.pragma.smallsquare.application.handler.dish;
 
-import com.pragma.smallsquare.restaurant.application.dto.request.DishDisableEnableRequestDto;
-import com.pragma.smallsquare.restaurant.domain.api.ICategoryServicePort;
-import com.pragma.smallsquare.restaurant.domain.api.IRestaurantServicePort;
-import com.pragma.smallsquare.restaurant.domain.model.Category;
-import com.pragma.smallsquare.restaurant.application.dto.request.DishRequestDto;
-import com.pragma.smallsquare.restaurant.application.dto.request.DishModifyRequestDto;
-import com.pragma.smallsquare.restaurant.application.dto.response.DishResponseDto;
-import com.pragma.smallsquare.restaurant.application.mapper.IDishRequestMapper;
-import com.pragma.smallsquare.restaurant.application.mapper.IDishResponseMapper;
-import com.pragma.smallsquare.restaurant.domain.api.IDishServicePort;
-import com.pragma.smallsquare.restaurant.domain.model.Dish;
-import com.pragma.smallsquare.restaurant.domain.model.Restaurant;
-import com.pragma.smallsquare.restaurant.insfrastructure.exceptions.CategoryNotFoundException;
-import com.pragma.smallsquare.restaurant.insfrastructure.exceptions.RestaurantNotFoundException;
-import com.pragma.smallsquare.restaurant.application.exceptions.UnauthorizedUserException;
+import com.pragma.smallsquare.application.dto.request.DishRequestDto;
+import com.pragma.smallsquare.domain.api.ICategoryServicePort;
+import com.pragma.smallsquare.domain.api.IDishServicePort;
+import com.pragma.smallsquare.domain.api.IRestaurantServicePort;
+import com.pragma.smallsquare.domain.model.Category;
+import com.pragma.smallsquare.domain.model.Dish;
+import com.pragma.smallsquare.domain.model.Restaurant;
+import com.pragma.smallsquare.insfrastructure.exceptions.CategoryNotFoundException;
+import com.pragma.smallsquare.insfrastructure.exceptions.RestaurantNotFoundException;
+import com.pragma.smallsquare.application.dto.request.DishDisableEnableRequestDto;
+import com.pragma.smallsquare.application.dto.request.DishModifyRequestDto;
+import com.pragma.smallsquare.application.dto.response.DishResponseDto;
+import com.pragma.smallsquare.application.mapper.IDishRequestMapper;
+import com.pragma.smallsquare.application.mapper.IDishResponseMapper;
+import com.pragma.smallsquare.application.exceptions.UnauthorizedUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,11 +60,6 @@ public class DishHandler implements IDishHandler {
     }
 
     @Override
-    public List<DishResponseDto> getAllDishesDto() {
-        return dishResponseMapper.toResponseDtoList(dishServicePort.getAllDishes());
-    }
-
-    @Override
     public List<DishResponseDto> getAllDishesByIdRestaurantAndIdCategory(Integer idRestaurant, Integer idCategory,
                                                                          int page, int size) {
         List<Dish> dishList = dishServicePort
@@ -76,13 +71,6 @@ public class DishHandler implements IDishHandler {
     @Override
     public DishResponseDto getDishDtoById(Integer id) {
         Dish dish = dishServicePort.getDishById(id);
-
-        return dishResponseMapper.toResponseDto(dish);
-    }
-
-    @Override
-    public DishResponseDto getDishDtoByName(String name) {
-        Dish dish = dishServicePort.getDishByName(name);
 
         return dishResponseMapper.toResponseDto(dish);
     }
@@ -113,10 +101,5 @@ public class DishHandler implements IDishHandler {
 
         updatedDish.setActive(dishRequest.getActive());
         dishServicePort.updateDish(updatedDish);
-    }
-
-    @Override
-    public void deleteDishDtoById(Integer id) {
-        dishServicePort.deleteDishById(id);
     }
 }

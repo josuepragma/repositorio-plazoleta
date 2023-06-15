@@ -1,7 +1,7 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.exceptions;
+package com.pragma.smallsquare.insfrastructure.exceptions;
 
 
-import com.pragma.smallsquare.restaurant.application.exceptions.UnauthorizedUserException;
+import com.pragma.smallsquare.application.exceptions.UnauthorizedUserException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

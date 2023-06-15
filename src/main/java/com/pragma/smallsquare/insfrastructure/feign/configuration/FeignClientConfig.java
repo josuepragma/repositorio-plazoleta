@@ -1,6 +1,6 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.feign.configuration;
+package com.pragma.smallsquare.insfrastructure.feign.configuration;
 
-import com.pragma.smallsquare.restaurant.insfrastructure.security.service.JwtContextHolder;
+import com.pragma.smallsquare.insfrastructure.security.service.JwtContextHolder;
 import feign.Logger;
 import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;

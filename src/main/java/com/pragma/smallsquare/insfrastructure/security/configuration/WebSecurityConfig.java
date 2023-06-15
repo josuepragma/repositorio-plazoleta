@@ -1,6 +1,6 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.security.configuration;
+package com.pragma.smallsquare.insfrastructure.security.configuration;
 
-import com.pragma.smallsquare.restaurant.insfrastructure.security.filter.JwtAuthenticationFilter;
+import com.pragma.smallsquare.insfrastructure.security.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

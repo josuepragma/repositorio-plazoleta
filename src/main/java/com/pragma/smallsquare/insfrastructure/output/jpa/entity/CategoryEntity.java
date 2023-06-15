@@ -1,4 +1,4 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.output.jpa.entity;
+package com.pragma.smallsquare.insfrastructure.output.jpa.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,8 +1,8 @@
-package com.pragma.smallsquare.restaurant.insfrastructure.security.filter;
+package com.pragma.smallsquare.insfrastructure.security.filter;
 
-import com.pragma.smallsquare.restaurant.insfrastructure.security.service.JwtService;
-import com.pragma.smallsquare.restaurant.insfrastructure.security.service.JwtContextHolder;
-import com.pragma.smallsquare.restaurant.insfrastructure.security.service.UserDetailsService;
+import com.pragma.smallsquare.insfrastructure.security.service.JwtContextHolder;
+import com.pragma.smallsquare.insfrastructure.security.service.JwtService;
+import com.pragma.smallsquare.insfrastructure.security.service.UserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
