@@ -1,6 +1,6 @@
 package com.pragma.smallsquare.application.handler.dish;
 
-import com.pragma.smallsquare.application.dto.request.DishDisableEnableRequestDto;
+import com.pragma.smallsquare.application.dto.request.DishDisableEnableRequest;
 import com.pragma.smallsquare.application.exceptions.UnauthorizedUserException;
 import com.pragma.smallsquare.domain.api.IDishServicePort;
 import com.pragma.smallsquare.domain.api.IRestaurantServicePort;
@@ -110,10 +110,10 @@ class HU06EnableDisableDishTest {
     @DisplayName("Change STATUS of a Dish with RIGHT REQUEST")
     void changeStatusDish_WithRightRequest() {
         //  Given
-        DishDisableEnableRequestDto dishRequest = getDishRequest_WithRightValues();
+        DishDisableEnableRequest dishRequest = getDishRequest_WithRightValues();
 
         //  When
-        Set<ConstraintViolation<DishDisableEnableRequestDto>> violations = validator.validate(dishRequest);
+        Set<ConstraintViolation<DishDisableEnableRequest>> violations = validator.validate(dishRequest);
 
         //  Then
         assertEquals(0, violations.size());
@@ -123,10 +123,10 @@ class HU06EnableDisableDishTest {
     @DisplayName("Change STATUS of a Dish with BAD REQUEST")
     void changeStatusDish_WithBadRequest() {
         //  Given
-        DishDisableEnableRequestDto dishRequest = getDishRequest_WithBadValues();
+        DishDisableEnableRequest dishRequest = getDishRequest_WithBadValues();
 
         //  When
-        Set<ConstraintViolation<DishDisableEnableRequestDto>> violations = validator.validate(dishRequest);
+        Set<ConstraintViolation<DishDisableEnableRequest>> violations = validator.validate(dishRequest);
         List<String> messages = violations.stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList());
@@ -140,15 +140,15 @@ class HU06EnableDisableDishTest {
     //######################################
     //              METHODS
     //######################################
-    DishDisableEnableRequestDto getDishRequest_WithRightValues() {
-        DishDisableEnableRequestDto dishRequest = new DishDisableEnableRequestDto();
+    DishDisableEnableRequest getDishRequest_WithRightValues() {
+        DishDisableEnableRequest dishRequest = new DishDisableEnableRequest();
         dishRequest.setActive(false);
 
         return dishRequest;
     }
 
-    DishDisableEnableRequestDto getDishRequest_WithBadValues() {
-        DishDisableEnableRequestDto dishRequest = new DishDisableEnableRequestDto();
+    DishDisableEnableRequest getDishRequest_WithBadValues() {
+        DishDisableEnableRequest dishRequest = new DishDisableEnableRequest();
         dishRequest.setActive(null);
 
         return dishRequest;

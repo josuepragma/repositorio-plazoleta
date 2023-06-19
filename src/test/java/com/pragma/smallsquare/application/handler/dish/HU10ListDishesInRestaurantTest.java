@@ -1,6 +1,6 @@
 package com.pragma.smallsquare.application.handler.dish;
 
-import com.pragma.smallsquare.application.dto.response.DishResponseDto;
+import com.pragma.smallsquare.application.dto.response.DishResponse;
 import com.pragma.smallsquare.application.mapper.IDishResponseMapper;
 import com.pragma.smallsquare.domain.api.IDishServicePort;
 import com.pragma.smallsquare.domain.model.Category;
@@ -13,9 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.validation.Validation;
-import javax.validation.Validator;
 
 import java.util.Collections;
 import java.util.List;
@@ -60,7 +57,7 @@ class HU10ListDishesInRestaurantTest {
         when(dishResponseMapper.toResponseDtoList(anyList())).thenReturn(getDishResponseList());
 
         //  When
-        List<DishResponseDto> dishes = dishHandler.getAllDishesByIdRestaurantAndIdCategory(idRestaurant, idCategory, page, size);
+        List<DishResponse> dishes = dishHandler.getAllDishesByIdRestaurantAndIdCategory(idRestaurant, idCategory, page, size);
 
         //  Then
         assertEquals(3, dishes.size());
@@ -75,7 +72,7 @@ class HU10ListDishesInRestaurantTest {
     @DisplayName("List empty Dish List in Restaurant Filter By Category")
     void getEmptyDishesInRestaurant_FilteredByCategory() {
         List<Dish> dishList = Collections.emptyList();
-        List<DishResponseDto> dishResponseList = Collections.emptyList();
+        List<DishResponse> dishResponseList = Collections.emptyList();
 
         Integer idRestaurant = 1;
         Integer idCategory = 4;
@@ -88,7 +85,7 @@ class HU10ListDishesInRestaurantTest {
         when(dishResponseMapper.toResponseDtoList(anyList())).thenReturn(dishResponseList);
 
         //  When
-        List<DishResponseDto> dishes = dishHandler.getAllDishesByIdRestaurantAndIdCategory(idRestaurant, idCategory, page, size);
+        List<DishResponse> dishes = dishHandler.getAllDishesByIdRestaurantAndIdCategory(idRestaurant, idCategory, page, size);
 
         //  Then
         assertEquals(0, dishes.size());
@@ -109,10 +106,10 @@ class HU10ListDishesInRestaurantTest {
         return List.of(dish01, dish02, dish03);
     }
 
-    List<DishResponseDto> getDishResponseList() {
-        DishResponseDto dish01 = new DishResponseDto("PAPA RELLENA", category.getName(), "", 10, restaurant.getName(), "", true);
-        DishResponseDto dish02 = new DishResponseDto( "LOMO SALTADO", category.getName(), "", 20, restaurant.getName(), "", true);
-        DishResponseDto dish03 = new DishResponseDto( "ARROZ CON POLLO", category.getName(), "", 30, restaurant.getName(), "", true);
+    List<DishResponse> getDishResponseList() {
+        DishResponse dish01 = new DishResponse(1, "PAPA RELLENA", category.getName(), "", 10, restaurant.getName(), "", true);
+        DishResponse dish02 = new DishResponse(2,  "LOMO SALTADO", category.getName(), "", 20, restaurant.getName(), "", true);
+        DishResponse dish03 = new DishResponse(3,  "ARROZ CON POLLO", category.getName(), "", 30, restaurant.getName(), "", true);
 
         return List.of(dish01, dish02, dish03);
     }

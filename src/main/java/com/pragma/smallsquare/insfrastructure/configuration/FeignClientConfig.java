@@ -1,4 +1,4 @@
-package com.pragma.smallsquare.insfrastructure.feign.configuration;
+package com.pragma.smallsquare.insfrastructure.configuration;
 
 import com.pragma.smallsquare.insfrastructure.security.service.JwtContextHolder;
 import feign.Logger;

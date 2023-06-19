@@ -1,9 +1,7 @@
 package com.pragma.smallsquare.application.handler.dish;
 
-import com.pragma.smallsquare.application.dto.request.DishRequestDto;
-import com.pragma.smallsquare.application.dto.request.RestaurantRequestDto;
+import com.pragma.smallsquare.application.dto.request.DishRequest;
 import com.pragma.smallsquare.application.exceptions.UnauthorizedUserException;
-import com.pragma.smallsquare.application.handler.dish.DishHandler;
 import com.pragma.smallsquare.application.mapper.IDishRequestMapper;
 import com.pragma.smallsquare.domain.api.ICategoryServicePort;
 import com.pragma.smallsquare.domain.api.IDishServicePort;
@@ -85,7 +83,7 @@ class HU03CreateDishTest {
     void createDish_WithCorrectValues() {
         //  Given
         Integer currentUserId = 10;
-        when(dishRequestMapper.toDish(any(DishRequestDto.class))).thenReturn(dish);
+        when(dishRequestMapper.toDish(any(DishRequest.class))).thenReturn(dish);
         when(categoryServicePort.getCategoryById(anyInt())).thenReturn(category);
         when(restaurantServicePort.getRestaurantById(anyInt())).thenReturn(restaurant);
 
@@ -93,7 +91,7 @@ class HU03CreateDishTest {
         dishHandler.saveDishDto(getDishRequest_WithRightValues(), currentUserId);
 
         //  Then
-        verify(dishRequestMapper).toDish(any(DishRequestDto.class));
+        verify(dishRequestMapper).toDish(any(DishRequest.class));
         verify(categoryServicePort).getCategoryById(anyInt());
         verify(restaurantServicePort).getRestaurantById(anyInt());
         verify(dishServicePort).saveDish(any(Dish.class));
@@ -104,7 +102,7 @@ class HU03CreateDishTest {
     void createDish_WithUnauthorizedUserException() {
         //  Given
         Integer currentUserId = 9;
-        when(dishRequestMapper.toDish(any(DishRequestDto.class))).thenReturn(dish);
+        when(dishRequestMapper.toDish(any(DishRequest.class))).thenReturn(dish);
         when(categoryServicePort.getCategoryById(anyInt())).thenReturn(category);
         when(restaurantServicePort.getRestaurantById(anyInt())).thenReturn(restaurant);
 
@@ -118,7 +116,7 @@ class HU03CreateDishTest {
     void createDish_WithCategoryNotFoundException() {
         //  Given
         Integer currentUserId = 10;
-        when(dishRequestMapper.toDish(any(DishRequestDto.class))).thenReturn(dish);
+        when(dishRequestMapper.toDish(any(DishRequest.class))).thenReturn(dish);
         when(categoryServicePort.getCategoryById(anyInt())).thenReturn(null);
         when(restaurantServicePort.getRestaurantById(anyInt())).thenReturn(restaurant);
 
@@ -132,7 +130,7 @@ class HU03CreateDishTest {
     void createDish_WithRestaurantNotFoundException() {
         //  Given
         Integer currentUserId = 10;
-        when(dishRequestMapper.toDish(any(DishRequestDto.class))).thenReturn(dish);
+        when(dishRequestMapper.toDish(any(DishRequest.class))).thenReturn(dish);
         when(categoryServicePort.getCategoryById(anyInt())).thenReturn(category);
         when(restaurantServicePort.getRestaurantById(anyInt())).thenReturn(null);
 
@@ -145,10 +143,10 @@ class HU03CreateDishTest {
     @DisplayName("Create Dish with RIGHT REQUEST")
     void createDish_WithRightRequest() {
         //  Given
-        DishRequestDto dishRequest = getDishRequest_WithRightValues();
+        DishRequest dishRequest = getDishRequest_WithRightValues();
 
         //  When
-        Set<ConstraintViolation<DishRequestDto>> violations = validator.validate(dishRequest);
+        Set<ConstraintViolation<DishRequest>> violations = validator.validate(dishRequest);
 
         //  Then
         assertEquals(0, violations.size());
@@ -158,10 +156,10 @@ class HU03CreateDishTest {
     @DisplayName("Create Dish with BAD REQUEST")
     void createRestaurant_WithBadRequest() {
         //  Given
-        DishRequestDto dishRequest = getDishRequest_WithBadValues();
+        DishRequest dishRequest = getDishRequest_WithBadValues();
 
         //  When
-        Set<ConstraintViolation<DishRequestDto>> violations = validator.validate(dishRequest);
+        Set<ConstraintViolation<DishRequest>> violations = validator.validate(dishRequest);
         List<String> messages = violations.stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList());
@@ -179,8 +177,8 @@ class HU03CreateDishTest {
     //######################################
     //              METHODS
     //######################################
-    DishRequestDto getDishRequest_WithRightValues() {
-        DishRequestDto dishRequest = new DishRequestDto();
+    DishRequest getDishRequest_WithRightValues() {
+        DishRequest dishRequest = new DishRequest();
         dishRequest.setName("CAUSA RELLENA");
         dishRequest.setPrice(12);
         dishRequest.setDescription("description");
@@ -191,8 +189,8 @@ class HU03CreateDishTest {
         return dishRequest;
     }
 
-    DishRequestDto getDishRequest_WithBadValues() {
-        DishRequestDto dishRequest = new DishRequestDto();
+    DishRequest getDishRequest_WithBadValues() {
+        DishRequest dishRequest = new DishRequest();
         dishRequest.setName("");
         dishRequest.setPrice(-10);
         dishRequest.setDescription("");

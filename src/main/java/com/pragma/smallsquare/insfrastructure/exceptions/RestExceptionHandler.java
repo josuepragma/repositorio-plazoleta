@@ -1,6 +1,9 @@
 package com.pragma.smallsquare.insfrastructure.exceptions;
 
 
+import com.pragma.smallsquare.application.exceptions.OrderStatusInProgressException;
+import com.pragma.smallsquare.application.exceptions.UnauthorizedUserException;
+import com.pragma.smallsquare.application.exceptions.UserIsNoOwnerException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -67,6 +70,46 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UserIsNoOwnerException.class)
     protected ResponseEntity<Object> handleUserIsNoOwnerException(UserIsNoOwnerException ex) {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(DishAlreadyExistsException.class)
+    protected ResponseEntity<Object> handleDishAlreadyExistsException(DishAlreadyExistsException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(DishNotFoundException.class)
+    protected ResponseEntity<Object> handleDishNotFoundException(DishNotFoundException ex) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(UnauthorizedUserException.class)
+    protected ResponseEntity<Object> handleUnauthorizedUserException(UnauthorizedUserException ex) {
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED);
+        apiError.setMessage(ex.getMessage());
+
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    protected ResponseEntity<Object> handleCategoryNotFoundException(CategoryNotFoundException ex) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(OrderStatusInProgressException.class)
+    protected ResponseEntity<Object> handleOrderStatusInProgressException(OrderStatusInProgressException ex) {
+        ApiError apiError = new ApiError(HttpStatus.CONFLICT);
         apiError.setMessage(ex.getMessage());
 
         return buildResponseEntity(apiError);

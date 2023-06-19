@@ -6,34 +6,31 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "dishes")
+@Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class DishEntity {
+public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    String name;
-    String description;
-    Integer price;
-    String urlImage;
-    Boolean active;
-
-    @ManyToOne
-    @JoinColumn(name = "id_category")
-    CategoryEntity category;
+    Date orderDate;
+    String status;
+    Integer idCustomer;
+    Integer idChef;
 
     @ManyToOne
     @JoinColumn(name = "id_restaurant")
     RestaurantEntity restaurant;
 
-//    @OneToMany(mappedBy = "dish")
-//    List<OrderDishEntity> ordersDishes;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    List<OrderDishEntity> ordersDishes = new ArrayList<>();
 
 }

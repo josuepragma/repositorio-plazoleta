@@ -9,7 +9,7 @@ import javax.validation.constraints.Positive;
 
 @Getter
 @Setter
-public class DishRequestDto {
+public class DishRequest {
     @NotEmpty(message = "DISH NAME field is required")
     String name;
 

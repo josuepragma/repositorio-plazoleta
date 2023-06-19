@@ -1,6 +1,6 @@
 package com.pragma.smallsquare.application.mapper;
 
-import com.pragma.smallsquare.application.dto.response.RestaurantResponseDto;
+import com.pragma.smallsquare.application.dto.response.RestaurantResponse;
 import com.pragma.smallsquare.domain.model.Restaurant;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -12,7 +12,7 @@ import java.util.List;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IRestaurantResponseMapper {
 
-    RestaurantResponseDto toResponseDto(Restaurant restaurant);
+    RestaurantResponse toResponseDto(Restaurant restaurant);
 
-    List<RestaurantResponseDto> toResponseDtoList(List<Restaurant> restaurantList);
+    List<RestaurantResponse> toResponseDtoList(List<Restaurant> restaurantList);
 }

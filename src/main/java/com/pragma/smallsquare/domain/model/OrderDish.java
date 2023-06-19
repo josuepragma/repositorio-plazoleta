@@ -1,33 +1,44 @@
 package com.pragma.smallsquare.domain.model;
 
 public class OrderDish {
-    private Order order;
-    private Dish dish;
+
+    private Integer id;
+    private Integer idOrder;
+    private Integer idDish;
     private Integer quantity;
 
     public OrderDish() {
     }
 
-    public OrderDish(Order order, Dish dish, Integer quantity) {
-        this.order = order;
-        this.dish = dish;
+    public OrderDish(Integer id, Integer idOrder, Integer idDish, Integer quantity) {
+        this.id = id;
+        this.idOrder = idOrder;
+        this.idDish = idDish;
         this.quantity = quantity;
     }
 
-    public Order getOrder() {
-        return order;
+    public Integer getId() {
+        return id;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Dish getDish() {
-        return dish;
+    public Integer getIdOrder() {
+        return idOrder;
     }
 
-    public void setDish(Dish dish) {
-        this.dish = dish;
+    public void setIdOrder(Integer idOrder) {
+        this.idOrder = idOrder;
+    }
+
+    public Integer getIdDish() {
+        return idDish;
+    }
+
+    public void setIdDish(Integer idDish) {
+        this.idDish = idDish;
     }
 
     public Integer getQuantity() {

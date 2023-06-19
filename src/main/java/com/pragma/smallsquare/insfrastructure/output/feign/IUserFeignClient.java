@@ -1,6 +1,6 @@
-package com.pragma.smallsquare.insfrastructure.feign.client;
+package com.pragma.smallsquare.insfrastructure.output.feign;
 
-import com.pragma.smallsquare.application.dto.response.UserResponseDto;
+import com.pragma.smallsquare.application.dto.response.UserResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface IUserFeignClient {
 
     @GetMapping("/user/{id}")
-    public UserResponseDto getUserById(@PathVariable Integer id);
+    public UserResponse getUserById(@PathVariable Integer id);
 
 }

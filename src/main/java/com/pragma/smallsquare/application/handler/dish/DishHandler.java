@@ -1,6 +1,8 @@
 package com.pragma.smallsquare.application.handler.dish;
 
-import com.pragma.smallsquare.application.dto.request.DishRequestDto;
+import com.pragma.smallsquare.application.dto.request.DishModifyRequest;
+import com.pragma.smallsquare.application.dto.request.DishRequest;
+import com.pragma.smallsquare.application.dto.response.DishResponse;
 import com.pragma.smallsquare.domain.api.ICategoryServicePort;
 import com.pragma.smallsquare.domain.api.IDishServicePort;
 import com.pragma.smallsquare.domain.api.IRestaurantServicePort;
@@ -9,9 +11,7 @@ import com.pragma.smallsquare.domain.model.Dish;
 import com.pragma.smallsquare.domain.model.Restaurant;
 import com.pragma.smallsquare.insfrastructure.exceptions.CategoryNotFoundException;
 import com.pragma.smallsquare.insfrastructure.exceptions.RestaurantNotFoundException;
-import com.pragma.smallsquare.application.dto.request.DishDisableEnableRequestDto;
-import com.pragma.smallsquare.application.dto.request.DishModifyRequestDto;
-import com.pragma.smallsquare.application.dto.response.DishResponseDto;
+import com.pragma.smallsquare.application.dto.request.DishDisableEnableRequest;
 import com.pragma.smallsquare.application.mapper.IDishRequestMapper;
 import com.pragma.smallsquare.application.mapper.IDishResponseMapper;
 import com.pragma.smallsquare.application.exceptions.UnauthorizedUserException;
@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class DishHandler implements IDishHandler {
 
     private final IRestaurantServicePort restaurantServicePort;
@@ -35,10 +35,10 @@ public class DishHandler implements IDishHandler {
     private final IDishResponseMapper dishResponseMapper;
 
     @Override
-    public void saveDishDto(DishRequestDto dishRequestDto, Integer currentUserId) {
-        Dish dish = dishRequestMapper.toDish(dishRequestDto);
-        Category category = categoryServicePort.getCategoryById(dishRequestDto.getIdCategory());
-        Restaurant restaurant = restaurantServicePort.getRestaurantById(dishRequestDto.getIdRestaurant());
+    public void saveDishDto(DishRequest dishRequest, Integer currentUserId) {
+        Dish dish = dishRequestMapper.toDish(dishRequest);
+        Category category = categoryServicePort.getCategoryById(dishRequest.getIdCategory());
+        Restaurant restaurant = restaurantServicePort.getRestaurantById(dishRequest.getIdRestaurant());
 
         if (category == null) {
             throw new CategoryNotFoundException("ID CATEGORY does not exist");
@@ -60,8 +60,8 @@ public class DishHandler implements IDishHandler {
     }
 
     @Override
-    public List<DishResponseDto> getAllDishesByIdRestaurantAndIdCategory(Integer idRestaurant, Integer idCategory,
-                                                                         int page, int size) {
+    public List<DishResponse> getAllDishesByIdRestaurantAndIdCategory(Integer idRestaurant, Integer idCategory,
+                                                                      int page, int size) {
         List<Dish> dishList = dishServicePort
                 .getAllDishesByIdRestaurantAndIdCategory(idRestaurant, idCategory, page, size);
 
@@ -69,14 +69,14 @@ public class DishHandler implements IDishHandler {
     }
 
     @Override
-    public DishResponseDto getDishDtoById(Integer id) {
+    public DishResponse getDishDtoById(Integer id) {
         Dish dish = dishServicePort.getDishById(id);
 
         return dishResponseMapper.toResponseDto(dish);
     }
 
     @Override
-    public void updatePriceAndDescriptionDishDto(DishModifyRequestDto dishRequest, Integer dishId, Integer currentUserId) {
+    public void updatePriceAndDescriptionDishDto(DishModifyRequest dishRequest, Integer dishId, Integer currentUserId) {
         Dish updatedDish = dishServicePort.getDishById(dishId);
         Restaurant restaurant = restaurantServicePort.getRestaurantById(updatedDish.getRestaurant().getId());
 
@@ -91,7 +91,7 @@ public class DishHandler implements IDishHandler {
     }
 
     @Override
-    public void changeStatusDishDto(DishDisableEnableRequestDto dishRequest, Integer dishId, Integer currentUserId) {
+    public void changeStatusDishDto(DishDisableEnableRequest dishRequest, Integer dishId, Integer currentUserId) {
         Dish updatedDish = dishServicePort.getDishById(dishId);
         Restaurant restaurant = restaurantServicePort.getRestaurantById(updatedDish.getRestaurant().getId());
 

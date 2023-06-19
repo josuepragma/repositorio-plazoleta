@@ -1,6 +1,6 @@
 package com.pragma.smallsquare.application.mapper;
 
-import com.pragma.smallsquare.application.dto.response.DishResponseDto;
+import com.pragma.smallsquare.application.dto.response.DishResponse;
 import com.pragma.smallsquare.domain.model.Dish;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,10 +15,10 @@ public interface IDishResponseMapper {
 
     @Mapping(target = "restaurant", source = "dish.restaurant.name")
     @Mapping(target = "category", source = "dish.category.name")
-    DishResponseDto toResponseDto(Dish dish);
+    DishResponse toResponseDto(Dish dish);
 
     @Mapping(target = "restaurant", source = "dish.restaurant.name")
     @Mapping(target = "category", source = "dish.category.name")
-    List<DishResponseDto> toResponseDtoList(List<Dish> dishList);
+    List<DishResponse> toResponseDtoList(List<Dish> dishList);
 
 }

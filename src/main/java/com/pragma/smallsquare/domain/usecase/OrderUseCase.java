@@ -3,7 +3,11 @@ package com.pragma.smallsquare.domain.usecase;
 import com.pragma.smallsquare.domain.api.IOrderServicePort;
 import com.pragma.smallsquare.domain.model.Order;
 import com.pragma.smallsquare.domain.spi.IOrderPersistencePort;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
+@Slf4j
 public class OrderUseCase implements IOrderServicePort {
 
     private final IOrderPersistencePort orderPersistencePort;
@@ -14,16 +18,18 @@ public class OrderUseCase implements IOrderServicePort {
 
     @Override
     public void saveOrder(Order order) {
+        log.warn("<--- FROM ORDER USE CASE --->");
+        log.warn("<--- orderPersistencePort.saveOrder(order); --->");
         orderPersistencePort.saveOrder(order);
     }
 
     @Override
-    public Order getOrderById(Integer id) {
-        return orderPersistencePort.getOrderById(id);
+    public Order getLastOrderByCustomerId(Integer customerId) {
+        return orderPersistencePort.getLastOrderByCustomerId(customerId);
     }
 
     @Override
-    public void updateOrder(Order order) {
-        orderPersistencePort.updateOrder(order);
+    public List<Order> getAllOrdersFilteredByStatus(String status, int page, int size) {
+        return orderPersistencePort.getAllOrdersFilteredByStatus(status, page, size);
     }
 }

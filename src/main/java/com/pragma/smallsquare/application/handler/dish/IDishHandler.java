@@ -1,21 +1,21 @@
 package com.pragma.smallsquare.application.handler.dish;
 
-import com.pragma.smallsquare.application.dto.request.DishDisableEnableRequestDto;
-import com.pragma.smallsquare.application.dto.request.DishRequestDto;
-import com.pragma.smallsquare.application.dto.request.DishModifyRequestDto;
-import com.pragma.smallsquare.application.dto.response.DishResponseDto;
+import com.pragma.smallsquare.application.dto.request.DishDisableEnableRequest;
+import com.pragma.smallsquare.application.dto.request.DishModifyRequest;
+import com.pragma.smallsquare.application.dto.request.DishRequest;
+import com.pragma.smallsquare.application.dto.response.DishResponse;
 
 import java.util.List;
 
 public interface IDishHandler {
-    void saveDishDto(DishRequestDto dishRequestDto, Integer currentUserId);
+    void saveDishDto(DishRequest dishRequest, Integer currentUserId);
 
-    List<DishResponseDto> getAllDishesByIdRestaurantAndIdCategory(Integer idRestaurant, Integer idCategory, int page, int size);
+    List<DishResponse> getAllDishesByIdRestaurantAndIdCategory(Integer idRestaurant, Integer idCategory, int page, int size);
 
-    DishResponseDto getDishDtoById(Integer id);
+    DishResponse getDishDtoById(Integer id);
 
-    void updatePriceAndDescriptionDishDto(DishModifyRequestDto dishRequest, Integer dishId, Integer currentUserId);
+    void updatePriceAndDescriptionDishDto(DishModifyRequest dishRequest, Integer dishId, Integer currentUserId);
 
-    void changeStatusDishDto(DishDisableEnableRequestDto dishRequest, Integer dishId, Integer currentUserId);
+    void changeStatusDishDto(DishDisableEnableRequest dishRequest, Integer dishId, Integer currentUserId);
 
 }

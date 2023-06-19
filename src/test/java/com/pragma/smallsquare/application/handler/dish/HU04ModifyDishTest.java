@@ -1,7 +1,6 @@
 package com.pragma.smallsquare.application.handler.dish;
 
-import com.pragma.smallsquare.application.dto.request.DishModifyRequestDto;
-import com.pragma.smallsquare.application.dto.request.DishRequestDto;
+import com.pragma.smallsquare.application.dto.request.DishModifyRequest;
 import com.pragma.smallsquare.application.exceptions.UnauthorizedUserException;
 import com.pragma.smallsquare.domain.api.IDishServicePort;
 import com.pragma.smallsquare.domain.api.IRestaurantServicePort;
@@ -110,10 +109,10 @@ class HU04ModifyDishTest {
     @DisplayName("Modify PRICE and DESCRIPTION in a Dish with RIGHT REQUEST")
     void updateDishFields_WithRightRequest() {
         //  Given
-        DishModifyRequestDto dishRequest = getDishRequest_WithRightValues();
+        DishModifyRequest dishRequest = getDishRequest_WithRightValues();
 
         //  When
-        Set<ConstraintViolation<DishModifyRequestDto>> violations = validator.validate(dishRequest);
+        Set<ConstraintViolation<DishModifyRequest>> violations = validator.validate(dishRequest);
 
         //  Then
         assertEquals(0, violations.size());
@@ -123,10 +122,10 @@ class HU04ModifyDishTest {
     @DisplayName("Modify PRICE and DESCRIPTION in a Dish with BAD REQUEST")
     void updateDishFields_WithBadRequest() {
         //  Given
-        DishModifyRequestDto dishRequest = getDishRequest_WithBadValues();
+        DishModifyRequest dishRequest = getDishRequest_WithBadValues();
 
         //  When
-        Set<ConstraintViolation<DishModifyRequestDto>> violations = validator.validate(dishRequest);
+        Set<ConstraintViolation<DishModifyRequest>> violations = validator.validate(dishRequest);
         List<String> messages = violations.stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList());
@@ -140,16 +139,16 @@ class HU04ModifyDishTest {
     //######################################
     //              METHODS
     //######################################
-    DishModifyRequestDto getDishRequest_WithRightValues() {
-        DishModifyRequestDto dishRequest = new DishModifyRequestDto();
+    DishModifyRequest getDishRequest_WithRightValues() {
+        DishModifyRequest dishRequest = new DishModifyRequest();
         dishRequest.setPrice(12);
         dishRequest.setDescription("description");
 
         return dishRequest;
     }
 
-    DishModifyRequestDto getDishRequest_WithBadValues() {
-        DishModifyRequestDto dishRequest = new DishModifyRequestDto();
+    DishModifyRequest getDishRequest_WithBadValues() {
+        DishModifyRequest dishRequest = new DishModifyRequest();
         dishRequest.setPrice(null);
         dishRequest.setDescription("");
 

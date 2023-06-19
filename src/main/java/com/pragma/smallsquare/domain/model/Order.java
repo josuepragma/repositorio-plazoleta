@@ -1,6 +1,8 @@
 package com.pragma.smallsquare.domain.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Order {
     Integer id;
@@ -9,17 +11,19 @@ public class Order {
     Integer idCustomer;
     Integer idChef;
     Restaurant restaurant;
+    List<OrderDish> ordersDishes = new ArrayList<>();
 
     public Order() {
     }
 
-    public Order(Integer id, Date orderDate, String status, Integer idCustomer, Integer idChef, Restaurant restaurant) {
+    public Order(Integer id, Date orderDate, String status, Integer idCustomer, Integer idChef, Restaurant restaurant, List<OrderDish> ordersDishes) {
         this.id = id;
         this.orderDate = orderDate;
         this.status = status;
         this.idCustomer = idCustomer;
         this.idChef = idChef;
         this.restaurant = restaurant;
+        this.ordersDishes = ordersDishes;
     }
 
     public Integer getId() {
@@ -69,4 +73,13 @@ public class Order {
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
+
+    public List<OrderDish> getOrdersDishes() {
+        return ordersDishes;
+    }
+
+    public void setOrdersDishes(List<OrderDish> ordersDishes) {
+        this.ordersDishes = ordersDishes;
+    }
+
 }

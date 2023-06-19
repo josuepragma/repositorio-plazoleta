@@ -1,12 +1,12 @@
 package com.pragma.smallsquare.application.handler.restaurant;
 
-import com.pragma.smallsquare.application.dto.request.RestaurantRequestDto;
-import com.pragma.smallsquare.application.dto.response.UserResponseDto;
+import com.pragma.smallsquare.application.dto.request.RestaurantRequest;
+import com.pragma.smallsquare.application.dto.response.UserResponse;
 import com.pragma.smallsquare.application.mapper.IRestaurantRequestMapper;
 import com.pragma.smallsquare.domain.api.IRestaurantServicePort;
 import com.pragma.smallsquare.domain.model.Restaurant;
-import com.pragma.smallsquare.insfrastructure.exceptions.UserIsNoOwnerException;
-import com.pragma.smallsquare.insfrastructure.feign.client.IUserFeignClient;
+import com.pragma.smallsquare.application.exceptions.UserIsNoOwnerException;
+import com.pragma.smallsquare.insfrastructure.output.feign.IUserFeignClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -59,7 +59,7 @@ class HU02CreateRestaurantTest {
     @DisplayName("Create a Restaurant with CORRECT OWNER User")
     void createRestaurant_WithCorrectOwnerUser() {
         //  Given
-        when(restaurantRequestMapper.toRestaurant(any(RestaurantRequestDto.class))).thenReturn(restaurant);
+        when(restaurantRequestMapper.toRestaurant(any(RestaurantRequest.class))).thenReturn(restaurant);
         when(userFeignClient.getUserById(anyInt())).thenReturn(getUserNoOwnerResponse());
 
         //  When
@@ -71,14 +71,14 @@ class HU02CreateRestaurantTest {
     @DisplayName("Create a Restaurant with INCORRECT OWNER User")
     void createRestaurant_WithIncorrectOwnerUser() {
         //  Given
-        when(restaurantRequestMapper.toRestaurant(any(RestaurantRequestDto.class))).thenReturn(restaurant);
+        when(restaurantRequestMapper.toRestaurant(any(RestaurantRequest.class))).thenReturn(restaurant);
         when(userFeignClient.getUserById(anyInt())).thenReturn(getUserOwnerResponse());
 
         //  When
         restaurantHandler.saveRestaurantDto(getRestaurantRequest_WithValidValues());
 
         //  Then
-        verify(restaurantRequestMapper).toRestaurant(any(RestaurantRequestDto.class));
+        verify(restaurantRequestMapper).toRestaurant(any(RestaurantRequest.class));
         verify(userFeignClient).getUserById(anyInt());
         verify(restaurantServicePort).saveRestaurant(any(Restaurant.class));
     }
@@ -87,10 +87,10 @@ class HU02CreateRestaurantTest {
     @DisplayName("Create a Restaurant with RIGHT REQUEST")
     void createRestaurant_WithRightRequest() {
         //  Given
-        RestaurantRequestDto restaurantRequest = getRestaurantRequest_WithValidValues();
+        RestaurantRequest restaurantRequest = getRestaurantRequest_WithValidValues();
 
         //  When
-        Set<ConstraintViolation<RestaurantRequestDto>> violations = validator.validate(restaurantRequest);
+        Set<ConstraintViolation<RestaurantRequest>> violations = validator.validate(restaurantRequest);
 
         //  Then
         assertEquals(0, violations.size());
@@ -100,10 +100,10 @@ class HU02CreateRestaurantTest {
     @DisplayName("Create a Restaurant with BAD REQUEST")
     void createRestaurant_WithBadRequest() {
         //  Given
-        RestaurantRequestDto restaurantRequest = getRestaurantRequest_WithInvalidValues();
+        RestaurantRequest restaurantRequest = getRestaurantRequest_WithInvalidValues();
 
         //  When
-        Set<ConstraintViolation<RestaurantRequestDto>> violations = validator.validate(restaurantRequest);
+        Set<ConstraintViolation<RestaurantRequest>> violations = validator.validate(restaurantRequest);
         List<String> messages = violations.stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList());
@@ -122,60 +122,60 @@ class HU02CreateRestaurantTest {
     //######################################
     //              METHODS
     //######################################
-    RestaurantRequestDto getRestaurantRequest_WithValidValues() {
-        RestaurantRequestDto restaurantRequestDto = new RestaurantRequestDto();
-        restaurantRequestDto.setName("RESTAURANT 123");
-        restaurantRequestDto.setNit("1111111110111");
-        restaurantRequestDto.setAddress("AV. ARENALES 1000");
-        restaurantRequestDto.setPhone("+51999888777");
-        restaurantRequestDto.setUrlLogo("https://images.pexels.com/photos/restaurant.jpg");
-        restaurantRequestDto.setIdOwner(2);
+    RestaurantRequest getRestaurantRequest_WithValidValues() {
+        RestaurantRequest restaurantRequest = new RestaurantRequest();
+        restaurantRequest.setName("RESTAURANT 123");
+        restaurantRequest.setNit("1111111110111");
+        restaurantRequest.setAddress("AV. ARENALES 1000");
+        restaurantRequest.setPhone("+51999888777");
+        restaurantRequest.setUrlLogo("https://images.pexels.com/photos/restaurant.jpg");
+        restaurantRequest.setIdOwner(2);
 
-        return restaurantRequestDto;
+        return restaurantRequest;
     }
 
-    RestaurantRequestDto getRestaurantRequest_WithInvalidValues() {
-        RestaurantRequestDto restaurantRequestDto = new RestaurantRequestDto();
-        restaurantRequestDto.setName("$$$###%%%");
-        restaurantRequestDto.setNit("123456789a");
-        restaurantRequestDto.setAddress("");
-        restaurantRequestDto.setPhone("");
-        restaurantRequestDto.setUrlLogo("");
-        restaurantRequestDto.setIdOwner(null);
+    RestaurantRequest getRestaurantRequest_WithInvalidValues() {
+        RestaurantRequest restaurantRequest = new RestaurantRequest();
+        restaurantRequest.setName("$$$###%%%");
+        restaurantRequest.setNit("123456789a");
+        restaurantRequest.setAddress("");
+        restaurantRequest.setPhone("");
+        restaurantRequest.setUrlLogo("");
+        restaurantRequest.setIdOwner(null);
 
-        return restaurantRequestDto;
+        return restaurantRequest;
     }
 
-    UserResponseDto getUserOwnerResponse() {
-        UserResponseDto userResponseDto = new UserResponseDto();
-        userResponseDto.setId(3);
-        userResponseDto.setName("Oscar");
-        userResponseDto.setSurname("Ramirez");
-        userResponseDto.setDocumentNumber("77777777");
-        userResponseDto.setPhone("+51777999888");
-        userResponseDto.setBirthdate("2000-10-10");
-        userResponseDto.setEmail("oscar@pragma.com.co");
-        userResponseDto.setPassword("$2a$10$LM2MAkzdUYcUB79ebi0Aw.oX5PkfXfZxYVVCE.aEkj0H4ZopwkmFi");
-        userResponseDto.setIdRole(2);
-        userResponseDto.setNameRole("PROPIETARIO");
+    UserResponse getUserOwnerResponse() {
+        UserResponse userResponse = new UserResponse();
+        userResponse.setId(3);
+        userResponse.setName("Oscar");
+        userResponse.setSurname("Ramirez");
+        userResponse.setDocumentNumber("77777777");
+        userResponse.setPhone("+51777999888");
+        userResponse.setBirthdate("2000-10-10");
+        userResponse.setEmail("oscar@pragma.com.co");
+        userResponse.setPassword("$2a$10$LM2MAkzdUYcUB79ebi0Aw.oX5PkfXfZxYVVCE.aEkj0H4ZopwkmFi");
+        userResponse.setIdRole(2);
+        userResponse.setNameRole("PROPIETARIO");
 
-        return userResponseDto;
+        return userResponse;
     }
 
-    UserResponseDto getUserNoOwnerResponse() {
-        UserResponseDto userResponseDto = new UserResponseDto();
-        userResponseDto.setId(3);
-        userResponseDto.setName("Oscar");
-        userResponseDto.setSurname("Ramirez");
-        userResponseDto.setDocumentNumber("77777777");
-        userResponseDto.setPhone("+51777999888");
-        userResponseDto.setBirthdate("2000-10-10");
-        userResponseDto.setEmail("oscar@pragma.com.co");
-        userResponseDto.setPassword("$2a$10$LM2MAkzdUYcUB79ebi0Aw.oX5PkfXfZxYVVCE.aEkj0H4ZopwkmFi");
-        userResponseDto.setIdRole(3);
-        userResponseDto.setNameRole("EMPLEADO");
+    UserResponse getUserNoOwnerResponse() {
+        UserResponse userResponse = new UserResponse();
+        userResponse.setId(3);
+        userResponse.setName("Oscar");
+        userResponse.setSurname("Ramirez");
+        userResponse.setDocumentNumber("77777777");
+        userResponse.setPhone("+51777999888");
+        userResponse.setBirthdate("2000-10-10");
+        userResponse.setEmail("oscar@pragma.com.co");
+        userResponse.setPassword("$2a$10$LM2MAkzdUYcUB79ebi0Aw.oX5PkfXfZxYVVCE.aEkj0H4ZopwkmFi");
+        userResponse.setIdRole(3);
+        userResponse.setNameRole("EMPLEADO");
 
-        return userResponseDto;
+        return userResponse;
     }
 
 }

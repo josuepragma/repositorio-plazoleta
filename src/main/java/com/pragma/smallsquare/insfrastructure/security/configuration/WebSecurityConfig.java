@@ -1,6 +1,7 @@
 package com.pragma.smallsquare.insfrastructure.security.configuration;
 
 import com.pragma.smallsquare.insfrastructure.security.filter.JwtAuthenticationFilter;
+import com.pragma.smallsquare.insfrastructure.util.RoleEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,10 +24,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private static final String ROLE_ADMIN = "ADMINISTRADOR";
-    private static final String ROLE_OWNER = "PROPIETARIO";
-    private static final String ROLE_EMPLOYEE = "EMPLEADO";
-    private static final String ROLE_CUSTOMER = "CLIENTE";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -43,12 +40,14 @@ public class WebSecurityConfig {
                         "/swagger-ui/**",
                         "/webjars/**",
                         "/swagger-ui.html").permitAll()
-                .antMatchers(HttpMethod.POST, "/small-square/restaurant/**").hasRole(ROLE_ADMIN)
-                .antMatchers(HttpMethod.GET, "/small-square/restaurant/").hasAnyRole(ROLE_ADMIN, ROLE_OWNER)
-                .antMatchers(HttpMethod.POST, "/small-square/dish/**").hasRole(ROLE_OWNER)
-                .antMatchers(HttpMethod.PUT, "/small-square/dish/**").hasRole(ROLE_OWNER)
-                .antMatchers(HttpMethod.GET, "/small-square/restaurant/list**").hasAnyRole(ROLE_CUSTOMER)
-                .antMatchers(HttpMethod.GET, "/small-square/dish/**").hasAnyRole(ROLE_ADMIN, ROLE_OWNER, ROLE_CUSTOMER)
+                .antMatchers(HttpMethod.POST, "/small-square/restaurant/**").hasRole(RoleEnum.ADMIN.getName())
+                .antMatchers(HttpMethod.GET, "/small-square/restaurant/").hasAnyRole(RoleEnum.ADMIN.getName(), RoleEnum.OWNER.getName())
+                .antMatchers(HttpMethod.POST, "/small-square/dish/").hasRole(RoleEnum.OWNER.getName())
+                .antMatchers(HttpMethod.PUT, "/small-square/dish/**").hasRole(RoleEnum.OWNER.getName())
+                .antMatchers(HttpMethod.GET, "/small-square/restaurant/list**").hasRole(RoleEnum.CUSTOMER.getName())
+                .antMatchers(HttpMethod.GET, "/small-square/dish/restaurant/{idRestaurant}/category/{idCategory}/list**").hasAnyRole(RoleEnum.ADMIN.getName(), RoleEnum.OWNER.getName(), RoleEnum.CUSTOMER.getName())
+                .antMatchers(HttpMethod.GET, "/small-square/order/").hasRole(RoleEnum.CUSTOMER.getName())
+                .antMatchers(HttpMethod.GET, "/small-square/order/status/{statusName}/filter**").hasRole(RoleEnum.EMPLOYEE.getName())
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()

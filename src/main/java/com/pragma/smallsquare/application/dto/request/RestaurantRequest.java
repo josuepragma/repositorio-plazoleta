@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class RestaurantRequestDto {
+public class RestaurantRequest {
 
     @NotEmpty(message = "RESTAURANT NAME field is required")
     @Pattern(regexp = "^.*[a-zA-Z]+.*$", message = "RESTAURANT NAME must have one letter at least")

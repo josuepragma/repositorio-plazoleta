@@ -2,21 +2,24 @@ package com.pragma.smallsquare.insfrastructure.configuration;
 
 import com.pragma.smallsquare.domain.api.ICategoryServicePort;
 import com.pragma.smallsquare.domain.api.IDishServicePort;
+import com.pragma.smallsquare.domain.api.IOrderServicePort;
 import com.pragma.smallsquare.domain.api.IRestaurantServicePort;
-import com.pragma.smallsquare.domain.spi.ICategoryPersistencePort;
-import com.pragma.smallsquare.domain.spi.IDishPersistencePort;
-import com.pragma.smallsquare.domain.spi.IRestaurantPersistencePort;
+import com.pragma.smallsquare.domain.spi.*;
 import com.pragma.smallsquare.domain.usecase.CategoryUseCase;
 import com.pragma.smallsquare.domain.usecase.DishUseCase;
+import com.pragma.smallsquare.domain.usecase.OrderUseCase;
 import com.pragma.smallsquare.domain.usecase.RestaurantUseCase;
 import com.pragma.smallsquare.insfrastructure.output.jpa.adapter.CategoryJpaAdapter;
+import com.pragma.smallsquare.insfrastructure.output.jpa.adapter.OrderJpaAdapter;
 import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.ICategoryEntityMapper;
+import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.IOrderEntityMapper;
 import com.pragma.smallsquare.insfrastructure.output.jpa.repository.ICategoryRepository;
 import com.pragma.smallsquare.insfrastructure.output.jpa.adapter.DishJpaAdapter;
 import com.pragma.smallsquare.insfrastructure.output.jpa.adapter.RestaurantJpaAdapter;
 import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.IDishEntityMapper;
 import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.IRestaurantEntityMapper;
 import com.pragma.smallsquare.insfrastructure.output.jpa.repository.IDishRepository;
+import com.pragma.smallsquare.insfrastructure.output.jpa.repository.IOrderRepository;
 import com.pragma.smallsquare.insfrastructure.output.jpa.repository.IRestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +37,9 @@ public class BeanConfiguration {
 
     private final ICategoryRepository categoryRepository;
     private final ICategoryEntityMapper categoryEntityMapper;
+
+    private final IOrderRepository orderRepository;
+    private final IOrderEntityMapper orderEntityMapper;
 
     @Bean
     public IRestaurantPersistencePort restaurantPersistencePort() {
@@ -55,14 +61,24 @@ public class BeanConfiguration {
         return new DishUseCase(dishPersistencePort());
     }
 
-
     @Bean
     public ICategoryPersistencePort categoryPersistencePort() {
         return new CategoryJpaAdapter(categoryRepository, categoryEntityMapper);
     }
+
     @Bean
     public ICategoryServicePort categoryServicePort() {
         return new CategoryUseCase(categoryPersistencePort());
+    }
+
+    @Bean
+    public IOrderPersistencePort orderPersistencePort() {
+        return new OrderJpaAdapter(orderRepository, orderEntityMapper);
+    }
+
+    @Bean
+    public IOrderServicePort orderServicePort() {
+        return new OrderUseCase(orderPersistencePort());
     }
 
 }

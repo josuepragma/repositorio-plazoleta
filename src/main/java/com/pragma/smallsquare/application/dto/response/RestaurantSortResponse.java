@@ -7,12 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class DishResponseDto {
+public class RestaurantSortResponse {
     String name;
-    String category;
-    String description;
-    Integer price;
-    String restaurant;
-    String urlImage;
-    Boolean active;
+    String urlLogo;
 }

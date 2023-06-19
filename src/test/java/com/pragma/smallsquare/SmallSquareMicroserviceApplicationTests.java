@@ -9,5 +9,4 @@ class SmallSquareMicroserviceApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

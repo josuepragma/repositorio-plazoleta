@@ -1,6 +1,6 @@
 package com.pragma.smallsquare.application.handler.restaurant;
 
-import com.pragma.smallsquare.application.dto.response.RestaurantSortResponseDto;
+import com.pragma.smallsquare.application.dto.response.RestaurantSortResponse;
 import com.pragma.smallsquare.application.mapper.IRestaurantSortResponseMapper;
 import com.pragma.smallsquare.domain.api.IRestaurantServicePort;
 import com.pragma.smallsquare.domain.model.Restaurant;
@@ -11,9 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.validation.Validation;
-import javax.validation.Validator;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,9 +29,6 @@ class HU09ListRestaurantsTest {
     @Mock
     private IRestaurantSortResponseMapper restaurantSortResponseMapper;
 
-    private Restaurant restaurant;
-    private List<Restaurant> restaurantList;
-
     @BeforeEach
     void setUp() {
 
@@ -50,21 +44,21 @@ class HU09ListRestaurantsTest {
         when(restaurantSortResponseMapper.toResponseList(any())).thenReturn(getRestaurantSortResponseDtoList02());
 
         //  When
-        List<RestaurantSortResponseDto> restaurantSort = restaurantHandler.getAllRestaurantsDtoOrderByName(page, size);
+        List<RestaurantSortResponse> restaurantSort = restaurantHandler.getAllRestaurantsDtoOrderByName(page, size);
 
         //  Then
         assertEquals(3, restaurantSort.size());
         assertEquals("https://images.pexels8.com", restaurantSort.get(2).getUrlLogo());
         assertEquals("RESTAURANT06", restaurantSort.get(0).getName());
         verify(restaurantServicePort).getAllRestaurantsOrderByName(anyInt(), anyInt());
-        verify(restaurantSortResponseMapper).toResponseList(any(List.class));
+        verify(restaurantSortResponseMapper).toResponseList(anyList());
     }
 
     @Test
     @DisplayName("List Empty List of Restaurants")
     void getEmptyRestaurants_OrderByNameAsc() {
         List<Restaurant> restaurants = Collections.emptyList();
-        List<RestaurantSortResponseDto> restaurantSortResponse = Collections.emptyList();
+        List<RestaurantSortResponse> restaurantSortResponse = Collections.emptyList();
         int page = 1;
         int size = 5;
 
@@ -73,12 +67,12 @@ class HU09ListRestaurantsTest {
         when(restaurantSortResponseMapper.toResponseList(any())).thenReturn(restaurantSortResponse);
 
         //  When
-        List<RestaurantSortResponseDto> restaurantSort = restaurantHandler.getAllRestaurantsDtoOrderByName(page, size);
+        List<RestaurantSortResponse> restaurantSort = restaurantHandler.getAllRestaurantsDtoOrderByName(page, size);
 
         //  Then
         assertEquals(0, restaurantSort.size());
         verify(restaurantServicePort).getAllRestaurantsOrderByName(anyInt(), anyInt());
-        verify(restaurantSortResponseMapper).toResponseList(any(List.class));
+        verify(restaurantSortResponseMapper).toResponseList(anyList());
 
     }
 
@@ -103,20 +97,20 @@ class HU09ListRestaurantsTest {
         return List.of(r06, r07, r08);
     }
 
-    List<RestaurantSortResponseDto> getRestaurantSortResponseDtoList01() {
-        RestaurantSortResponseDto r01 = new RestaurantSortResponseDto("RESTAURANT01", "https://images.pexels1.com");
-        RestaurantSortResponseDto r02 = new RestaurantSortResponseDto("RESTAURANT02", "https://images.pexels2.com");
-        RestaurantSortResponseDto r03 = new RestaurantSortResponseDto("RESTAURANT03", "https://images.pexels3.com");
-        RestaurantSortResponseDto r04 = new RestaurantSortResponseDto("RESTAURANT04", "https://images.pexels4.com");
-        RestaurantSortResponseDto r05 = new RestaurantSortResponseDto("RESTAURANT05", "https://images.pexels5.com");
+    List<RestaurantSortResponse> getRestaurantSortResponseDtoList01() {
+        RestaurantSortResponse r01 = new RestaurantSortResponse("RESTAURANT01", "https://images.pexels1.com");
+        RestaurantSortResponse r02 = new RestaurantSortResponse("RESTAURANT02", "https://images.pexels2.com");
+        RestaurantSortResponse r03 = new RestaurantSortResponse("RESTAURANT03", "https://images.pexels3.com");
+        RestaurantSortResponse r04 = new RestaurantSortResponse("RESTAURANT04", "https://images.pexels4.com");
+        RestaurantSortResponse r05 = new RestaurantSortResponse("RESTAURANT05", "https://images.pexels5.com");
 
         return List.of(r01, r02, r03, r04, r05);
     }
 
-    List<RestaurantSortResponseDto> getRestaurantSortResponseDtoList02() {
-        RestaurantSortResponseDto r06 = new RestaurantSortResponseDto("RESTAURANT06", "https://images.pexels6.com");
-        RestaurantSortResponseDto r07 = new RestaurantSortResponseDto("RESTAURANT07", "https://images.pexels7.com");
-        RestaurantSortResponseDto r08 = new RestaurantSortResponseDto("RESTAURANT08", "https://images.pexels8.com");
+    List<RestaurantSortResponse> getRestaurantSortResponseDtoList02() {
+        RestaurantSortResponse r06 = new RestaurantSortResponse("RESTAURANT06", "https://images.pexels6.com");
+        RestaurantSortResponse r07 = new RestaurantSortResponse("RESTAURANT07", "https://images.pexels7.com");
+        RestaurantSortResponse r08 = new RestaurantSortResponse("RESTAURANT08", "https://images.pexels8.com");
 
         return List.of(r06, r07, r08);
     }

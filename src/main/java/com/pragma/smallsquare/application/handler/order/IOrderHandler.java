@@ -2,12 +2,12 @@ package com.pragma.smallsquare.application.handler.order;
 
 import com.pragma.smallsquare.application.dto.request.OrderRequest;
 import com.pragma.smallsquare.application.dto.response.OrderResponse;
-import com.pragma.smallsquare.domain.model.Order;
+
+import java.util.List;
 
 public interface IOrderHandler {
-    void saveOrderDto(OrderRequest orderRequest);
+    void saveNewOrderDto(OrderRequest orderRequest, Integer currentCustomerId);
 
-    OrderResponse getOrderDtoById(Integer id);
+    List<OrderResponse> getAllOrdersFilteredByStatus(String status, int page, int size);
 
-    void updateOrderDto(OrderRequest orderRequest);
 }

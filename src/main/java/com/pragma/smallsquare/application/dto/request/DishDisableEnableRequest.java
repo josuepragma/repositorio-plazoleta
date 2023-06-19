@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-public class DishDisableEnableRequestDto {
+public class DishDisableEnableRequest {
 
     @NotNull(message = "ACTIVE field is required. True or False")
     Boolean active;

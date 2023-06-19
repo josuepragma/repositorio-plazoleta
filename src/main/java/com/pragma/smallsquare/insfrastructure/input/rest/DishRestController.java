@@ -1,9 +1,9 @@
 package com.pragma.smallsquare.insfrastructure.input.rest;
 
-import com.pragma.smallsquare.application.dto.request.DishRequestDto;
-import com.pragma.smallsquare.application.dto.request.DishDisableEnableRequestDto;
-import com.pragma.smallsquare.application.dto.request.DishModifyRequestDto;
-import com.pragma.smallsquare.application.dto.response.DishResponseDto;
+import com.pragma.smallsquare.application.dto.request.DishModifyRequest;
+import com.pragma.smallsquare.application.dto.request.DishRequest;
+import com.pragma.smallsquare.application.dto.request.DishDisableEnableRequest;
+import com.pragma.smallsquare.application.dto.response.DishResponse;
 import com.pragma.smallsquare.application.handler.dish.IDishHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -22,8 +22,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/small-square")
 @RequiredArgsConstructor
+@RequestMapping("/small-square")
 public class DishRestController {
 
     private final IDishHandler dishHandler;
@@ -36,9 +36,9 @@ public class DishRestController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping(value = "/dish/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveDish(@Valid @RequestBody DishRequestDto dishRequestDto, HttpServletRequest request) {
+    public ResponseEntity<Void> saveDish(@Valid @RequestBody DishRequest dishRequest, HttpServletRequest request) {
         Integer currentUserId = Integer.valueOf(request.getAttribute("userId").toString());
-        dishHandler.saveDishDto(dishRequestDto, currentUserId);
+        dishHandler.saveDishDto(dishRequest, currentUserId);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -52,11 +52,11 @@ public class DishRestController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping(value = "/dish/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateDish(@Valid @RequestBody DishModifyRequestDto dishModifyRequestDto,
+    public ResponseEntity<Void> updateDish(@Valid @RequestBody DishModifyRequest dishModifyRequest,
                                            @PathVariable(name = "id") Integer id,
                                            HttpServletRequest request) {
         Integer currentUserId = Integer.valueOf(request.getAttribute("userId").toString());
-        dishHandler.updatePriceAndDescriptionDishDto(dishModifyRequestDto, id, currentUserId);
+        dishHandler.updatePriceAndDescriptionDishDto(dishModifyRequest, id, currentUserId);
 
         return ResponseEntity.noContent().build();
     }
@@ -70,11 +70,11 @@ public class DishRestController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     @PutMapping(value = "/dish/status/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> enableOrDisableDish(@Valid @RequestBody DishDisableEnableRequestDto dishRequestDto,
+    public ResponseEntity<Void> enableOrDisableDish(@Valid @RequestBody DishDisableEnableRequest dishRequest,
                                                     @PathVariable(name = "id") Integer id,
                                                     HttpServletRequest request) {
         Integer currentUserId = Integer.valueOf(request.getAttribute("userId").toString());
-        dishHandler.changeStatusDishDto(dishRequestDto, id, currentUserId);
+        dishHandler.changeStatusDishDto(dishRequest, id, currentUserId);
 
         return ResponseEntity.noContent().build();
     }
@@ -83,7 +83,7 @@ public class DishRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK. Dishes found successfully",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = DishResponseDto.class))),
+                            schema = @Schema(implementation = DishResponse.class))),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST. Request is invalid", content = @Content),
             @ApiResponse(responseCode = "401", description = "UNAUTHORIZED. User is not authorized", content = @Content),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Dishes not found", content = @Content),
@@ -92,7 +92,7 @@ public class DishRestController {
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping(value = "/dish/restaurant/{idRestaurant}/category/{idCategory}/list",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<DishResponseDto>> getAllDishesByRestaurantAndCategory(
+    public ResponseEntity<List<DishResponse>> getAllDishesByRestaurantAndCategory(
             @PathVariable(value = "idRestaurant") Integer idRestaurant,
             @PathVariable(value = "idCategory") Integer idCategory,
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -104,7 +104,7 @@ public class DishRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK. Dish found successfully",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = DishResponseDto.class))),
+                            schema = @Schema(implementation = DishResponse.class))),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST. Request is invalid", content = @Content),
             @ApiResponse(responseCode = "401", description = "UNAUTHORIZED. User is not authorized", content = @Content),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Dish not found", content = @Content),
@@ -112,7 +112,7 @@ public class DishRestController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping(value = "/dish/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DishResponseDto> getDishById(@PathVariable(name = "id") Integer id) {
+    public ResponseEntity<DishResponse> getDishById(@PathVariable(name = "id") Integer id) {
         return ResponseEntity.ok(dishHandler.getDishDtoById(id));
     }
 

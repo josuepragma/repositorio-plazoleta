@@ -1,8 +1,8 @@
 package com.pragma.smallsquare.insfrastructure.input.rest;
 
-import com.pragma.smallsquare.application.dto.request.RestaurantRequestDto;
-import com.pragma.smallsquare.application.dto.response.RestaurantResponseDto;
-import com.pragma.smallsquare.application.dto.response.RestaurantSortResponseDto;
+import com.pragma.smallsquare.application.dto.request.RestaurantRequest;
+import com.pragma.smallsquare.application.dto.response.RestaurantResponse;
+import com.pragma.smallsquare.application.dto.response.RestaurantSortResponse;
 import com.pragma.smallsquare.application.handler.restaurant.IRestaurantHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,7 +34,7 @@ public class RestaurantRestController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping(value = "/restaurant/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveRestaurantInSmallSquare(@Valid @RequestBody RestaurantRequestDto restaurantRequest) {
+    public ResponseEntity<Void> saveRestaurantInSmallSquare(@Valid @RequestBody RestaurantRequest restaurantRequest) {
         restaurantHandler.saveRestaurantDto(restaurantRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -44,7 +44,7 @@ public class RestaurantRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK. Restaurant found successfully",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RestaurantResponseDto.class))),
+                            schema = @Schema(implementation = RestaurantResponse.class))),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST. Request is invalid", content = @Content),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Restaurant not found", content = @Content),
             @ApiResponse(responseCode = "401", description = "UNAUTHORIZED. User is not authorized", content = @Content),
@@ -52,7 +52,7 @@ public class RestaurantRestController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping(value = "/restaurant/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestaurantResponseDto> getRestaurantById(@PathVariable(name = "id") Integer id) {
+    public ResponseEntity<RestaurantResponse> getRestaurantById(@PathVariable(name = "id") Integer id) {
         return ResponseEntity.ok(restaurantHandler.getRestaurantDtoById(id));
     }
 
@@ -60,7 +60,7 @@ public class RestaurantRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK. Restaurant found successfully",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RestaurantSortResponseDto.class))),
+                            schema = @Schema(implementation = RestaurantSortResponse.class))),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST. Request is invalid", content = @Content),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Restaurant not found", content = @Content),
             @ApiResponse(responseCode = "401", description = "UNAUTHORIZED. User is not authorized", content = @Content),
@@ -68,7 +68,7 @@ public class RestaurantRestController {
     })
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping(value = "/restaurant/list", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<RestaurantSortResponseDto>> getRestaurantsOrderByName(
+    public ResponseEntity<List<RestaurantSortResponse>> getRestaurantsOrderByName(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "5") int size) {
         return ResponseEntity.ok(restaurantHandler.getAllRestaurantsDtoOrderByName(page, size));

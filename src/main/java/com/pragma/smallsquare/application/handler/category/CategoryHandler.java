@@ -1,6 +1,6 @@
 package com.pragma.smallsquare.application.handler.category;
 
-import com.pragma.smallsquare.application.dto.response.CategoryResponseDto;
+import com.pragma.smallsquare.application.dto.response.CategoryResponse;
 import com.pragma.smallsquare.application.mapper.ICategoryResponseMapper;
 import com.pragma.smallsquare.domain.api.ICategoryServicePort;
 import com.pragma.smallsquare.domain.model.Category;
@@ -19,21 +19,21 @@ public class CategoryHandler implements ICategoryHandler {
     private final ICategoryResponseMapper categoryResponseMapper;
 
     @Override
-    public List<CategoryResponseDto> getAllCategoriesDto() {
+    public List<CategoryResponse> getAllCategoriesDto() {
         List<Category> categoryList = categoryServicePort.getAllCategories();
 
         return categoryResponseMapper.toResponseDtoList(categoryList);
     }
 
     @Override
-    public CategoryResponseDto getCategoryDtoById(Integer id) {
+    public CategoryResponse getCategoryDtoById(Integer id) {
         Category category = categoryServicePort.getCategoryById(id);
 
         return categoryResponseMapper.toResponseDto(category);
     }
 
     @Override
-    public CategoryResponseDto getCategoryDtoByName(String name) {
+    public CategoryResponse getCategoryDtoByName(String name) {
         Category category = categoryServicePort.getCategoryByName(name);
 
         return categoryResponseMapper.toResponseDto(category);

@@ -5,8 +5,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CategoryResponseDto {
-    Integer id;
+public class RestaurantResponse {
     String name;
-    String description;
+    String nit;
+    String address;
+    String phone;
+    String urlLogo;
+    Integer idOwner;
 }

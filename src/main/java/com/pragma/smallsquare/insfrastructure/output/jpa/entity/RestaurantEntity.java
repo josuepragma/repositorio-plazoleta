@@ -25,4 +25,7 @@ public class RestaurantEntity {
 
     @OneToMany(mappedBy = "restaurant")
     private List<DishEntity> dishes;
+
+    @OneToMany(mappedBy = "restaurant")
+    private List<OrderEntity> orders;
 }

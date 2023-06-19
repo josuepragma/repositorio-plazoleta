@@ -1,17 +1,17 @@
 package com.pragma.smallsquare.application.handler.restaurant;
 
-import com.pragma.smallsquare.application.dto.request.RestaurantRequestDto;
-import com.pragma.smallsquare.application.dto.response.RestaurantResponseDto;
-import com.pragma.smallsquare.application.dto.response.RestaurantSortResponseDto;
+import com.pragma.smallsquare.application.dto.request.RestaurantRequest;
+import com.pragma.smallsquare.application.dto.response.RestaurantResponse;
+import com.pragma.smallsquare.application.dto.response.RestaurantSortResponse;
 
 import java.util.List;
 
 public interface IRestaurantHandler {
 
-    void saveRestaurantDto(RestaurantRequestDto restaurantRequestDto);
+    void saveRestaurantDto(RestaurantRequest restaurantRequest);
 
-    List<RestaurantSortResponseDto> getAllRestaurantsDtoOrderByName(int page, int size);
+    List<RestaurantSortResponse> getAllRestaurantsDtoOrderByName(int page, int size);
 
-    RestaurantResponseDto getRestaurantDtoById(Integer id);
+    RestaurantResponse getRestaurantDtoById(Integer id);
 
 }
