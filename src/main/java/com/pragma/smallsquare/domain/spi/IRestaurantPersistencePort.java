@@ -10,4 +10,6 @@ public interface IRestaurantPersistencePort {
     List<Restaurant> getAllRestaurantsOrderByName(int startPage, int size);
 
     Restaurant getRestaurantById(Integer id);
+
+    Restaurant getRestaurantByIdOwner(Integer idOwner);
 }

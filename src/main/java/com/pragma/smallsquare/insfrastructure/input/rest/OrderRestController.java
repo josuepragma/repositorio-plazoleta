@@ -38,7 +38,9 @@ public class OrderRestController {
                                                                             @RequestParam(value = "page", defaultValue = "0") int page,
                                                                             @RequestParam(value = "size", defaultValue = "10") int size,
                                                                             HttpServletRequest request) {
-        log.warn("<--- FROM ORDER REST CONTROLLER --->");
-        return ResponseEntity.ok(orderHandler.getAllOrdersFilteredByStatus(status, page, size));
+        Integer employeeUserId = Integer.valueOf(request.getAttribute("userId").toString());
+
+        return ResponseEntity.ok(orderHandler
+                .getAllOrdersFilteredByStatusAndRestaurant(status.toUpperCase(), page, size, employeeUserId));
     }
 }

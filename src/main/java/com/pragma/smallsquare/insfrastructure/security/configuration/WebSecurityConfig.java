@@ -40,6 +40,7 @@ public class WebSecurityConfig {
                         "/swagger-ui/**",
                         "/webjars/**",
                         "/swagger-ui.html").permitAll()
+                .antMatchers(HttpMethod.POST, "/small-square/employee/").hasRole(RoleEnum.OWNER.getName())
                 .antMatchers(HttpMethod.POST, "/small-square/restaurant/**").hasRole(RoleEnum.ADMIN.getName())
                 .antMatchers(HttpMethod.GET, "/small-square/restaurant/").hasAnyRole(RoleEnum.ADMIN.getName(), RoleEnum.OWNER.getName())
                 .antMatchers(HttpMethod.POST, "/small-square/dish/").hasRole(RoleEnum.OWNER.getName())

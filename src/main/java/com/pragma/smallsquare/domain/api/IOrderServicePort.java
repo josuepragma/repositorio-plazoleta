@@ -1,6 +1,7 @@
 package com.pragma.smallsquare.domain.api;
 
 import com.pragma.smallsquare.domain.model.Order;
+import com.pragma.smallsquare.domain.model.Restaurant;
 
 import java.util.List;
 
@@ -10,5 +11,5 @@ public interface IOrderServicePort {
 
     Order getLastOrderByCustomerId(Integer customerId);
 
-    List<Order> getAllOrdersFilteredByStatus(String status, int page, int size);
+    List<Order> getAllOrdersFilteredByStatusAndRestaurant(String status, int page, int size, Restaurant restaurant);
 }

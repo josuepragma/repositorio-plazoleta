@@ -7,6 +7,10 @@ import com.pragma.smallsquare.application.exceptions.OrderStatusInProgressExcept
 import com.pragma.smallsquare.application.mapper.IOrderDishRequestMapper;
 import com.pragma.smallsquare.application.mapper.IOrderRequestMapper;
 import com.pragma.smallsquare.application.mapper.IOrderResponseMapper;
+import com.pragma.smallsquare.domain.api.IRestaurantServicePort;
+import com.pragma.smallsquare.domain.api.employee.IEmployeeRestaurantServicePort;
+import com.pragma.smallsquare.domain.model.Restaurant;
+import com.pragma.smallsquare.domain.model.employee.EmployeeRestaurant;
 import com.pragma.smallsquare.insfrastructure.util.StatusEnum;
 import com.pragma.smallsquare.domain.api.IOrderServicePort;
 import com.pragma.smallsquare.domain.model.Order;
@@ -27,8 +31,12 @@ public class OrderHandler implements IOrderHandler {
 
     private final IOrderServicePort orderServicePort;
     private final IOrderRequestMapper orderRequestMapper;
-    private final IOrderDishRequestMapper orderDishRequestMapper;
     private final IOrderResponseMapper orderResponseMapper;
+
+    private final IOrderDishRequestMapper orderDishRequestMapper;
+
+    private final IEmployeeRestaurantServicePort employeeRestaurantServicePort;
+    private final IRestaurantServicePort restaurantServicePort;
 
     @Override
     public void saveNewOrderDto(OrderRequest orderRequest, Integer currentCustomerId) {
@@ -44,6 +52,7 @@ public class OrderHandler implements IOrderHandler {
         }
 
         Order order = orderRequestMapper.toOrder(orderRequest);
+        order.setIdChef(null);
         order.setIdCustomer(currentCustomerId);
         order.setOrderDate(new Date());
         order.setStatus(StatusEnum.PENDING.getName());
@@ -58,13 +67,16 @@ public class OrderHandler implements IOrderHandler {
     }
 
     @Override
-    public List<OrderResponse> getAllOrdersFilteredByStatus(String status, int page, int size) {
-
+    public List<OrderResponse> getAllOrdersFilteredByStatusAndRestaurant(String status, int page, int size, Integer currentEmployeeId) {
         if (!StatusEnum.statusExists(status)) {
             throw new OrderStatusDoesNotExistException("STATUS entered does not exist");
         }
 
-        List<Order> orders = orderServicePort.getAllOrdersFilteredByStatus(status, page, size);
+        EmployeeRestaurant employeeRestaurant = employeeRestaurantServicePort.getEmployeeRestaurantByIdEmployee(currentEmployeeId);
+        Restaurant restaurant = restaurantServicePort.getRestaurantById(employeeRestaurant.getIdRestaurant());
+
+        List<Order> orders = orderServicePort.getAllOrdersFilteredByStatusAndRestaurant(status, page, size, restaurant);
+
         return orderResponseMapper.toOrderResponseList(orders);
     }
 }

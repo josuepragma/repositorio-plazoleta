@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class OrderDishResponse {
 
-    Integer idOrder;
     Integer idDish;
     Integer quantity;
 }

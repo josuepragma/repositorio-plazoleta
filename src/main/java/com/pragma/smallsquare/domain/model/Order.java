@@ -11,9 +11,10 @@ public class Order {
     Integer idCustomer;
     Integer idChef;
     Restaurant restaurant;
-    List<OrderDish> ordersDishes = new ArrayList<>();
+    List<OrderDish> ordersDishes;
 
     public Order() {
+        ordersDishes = new ArrayList<>();
     }
 
     public Order(Integer id, Date orderDate, String status, Integer idCustomer, Integer idChef, Restaurant restaurant, List<OrderDish> ordersDishes) {

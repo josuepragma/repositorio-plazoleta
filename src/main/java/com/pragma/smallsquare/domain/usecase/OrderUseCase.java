@@ -2,6 +2,7 @@ package com.pragma.smallsquare.domain.usecase;
 
 import com.pragma.smallsquare.domain.api.IOrderServicePort;
 import com.pragma.smallsquare.domain.model.Order;
+import com.pragma.smallsquare.domain.model.Restaurant;
 import com.pragma.smallsquare.domain.spi.IOrderPersistencePort;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +30,7 @@ public class OrderUseCase implements IOrderServicePort {
     }
 
     @Override
-    public List<Order> getAllOrdersFilteredByStatus(String status, int page, int size) {
-        return orderPersistencePort.getAllOrdersFilteredByStatus(status, page, size);
+    public List<Order> getAllOrdersFilteredByStatusAndRestaurant(String status, int page, int size, Restaurant restaurant) {
+        return orderPersistencePort.getAllOrdersFilteredByStatusAndRestaurant(status, page, size, restaurant);
     }
 }

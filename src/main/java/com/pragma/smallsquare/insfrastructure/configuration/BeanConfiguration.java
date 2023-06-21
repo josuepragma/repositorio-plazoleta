@@ -4,15 +4,20 @@ import com.pragma.smallsquare.domain.api.ICategoryServicePort;
 import com.pragma.smallsquare.domain.api.IDishServicePort;
 import com.pragma.smallsquare.domain.api.IOrderServicePort;
 import com.pragma.smallsquare.domain.api.IRestaurantServicePort;
+import com.pragma.smallsquare.domain.api.employee.IEmployeeRestaurantServicePort;
 import com.pragma.smallsquare.domain.spi.*;
+import com.pragma.smallsquare.domain.spi.employee.IEmployeeRestaurantPersistencePort;
 import com.pragma.smallsquare.domain.usecase.CategoryUseCase;
 import com.pragma.smallsquare.domain.usecase.DishUseCase;
 import com.pragma.smallsquare.domain.usecase.OrderUseCase;
 import com.pragma.smallsquare.domain.usecase.RestaurantUseCase;
+import com.pragma.smallsquare.domain.usecase.employee.EmployeeRestaurantUseCase;
 import com.pragma.smallsquare.insfrastructure.output.jpa.adapter.CategoryJpaAdapter;
 import com.pragma.smallsquare.insfrastructure.output.jpa.adapter.OrderJpaAdapter;
+import com.pragma.smallsquare.insfrastructure.output.jpa.adapter.employee.EmployeeRestaurantJpaAdapterRestaurant;
 import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.ICategoryEntityMapper;
 import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.IOrderEntityMapper;
+import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.employee.IEmployeeRestaurantEntityMapper;
 import com.pragma.smallsquare.insfrastructure.output.jpa.repository.ICategoryRepository;
 import com.pragma.smallsquare.insfrastructure.output.jpa.adapter.DishJpaAdapter;
 import com.pragma.smallsquare.insfrastructure.output.jpa.adapter.RestaurantJpaAdapter;
@@ -21,6 +26,7 @@ import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.IRestaurantEntit
 import com.pragma.smallsquare.insfrastructure.output.jpa.repository.IDishRepository;
 import com.pragma.smallsquare.insfrastructure.output.jpa.repository.IOrderRepository;
 import com.pragma.smallsquare.insfrastructure.output.jpa.repository.IRestaurantRepository;
+import com.pragma.smallsquare.insfrastructure.output.jpa.repository.employee.IEmployeeRestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +46,9 @@ public class BeanConfiguration {
 
     private final IOrderRepository orderRepository;
     private final IOrderEntityMapper orderEntityMapper;
+
+    private final IEmployeeRestaurantRepository employeeRestaurantRepository;
+    private final IEmployeeRestaurantEntityMapper employeeRestaurantEntityMapper;
 
     @Bean
     public IRestaurantPersistencePort restaurantPersistencePort() {
@@ -73,12 +82,23 @@ public class BeanConfiguration {
 
     @Bean
     public IOrderPersistencePort orderPersistencePort() {
-        return new OrderJpaAdapter(orderRepository, orderEntityMapper);
+        return new OrderJpaAdapter(orderRepository, orderEntityMapper, restaurantEntityMapper);
     }
 
     @Bean
     public IOrderServicePort orderServicePort() {
         return new OrderUseCase(orderPersistencePort());
+    }
+
+
+    @Bean
+    public IEmployeeRestaurantPersistencePort employeeRestaurantPersistencePort() {
+        return new EmployeeRestaurantJpaAdapterRestaurant(employeeRestaurantRepository, employeeRestaurantEntityMapper);
+    }
+
+    @Bean
+    public IEmployeeRestaurantServicePort employeeRestaurantServicePort() {
+        return new EmployeeRestaurantUseCase(employeeRestaurantPersistencePort());
     }
 
 }

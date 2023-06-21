@@ -13,10 +13,14 @@ import java.util.List;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IOrderResponseMapper {
 
-    @Mapping(target = "restaurant", source = "order.restaurant.name")
+//    @Mapping(source = "order.orderDate", target = "orderDate", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
+    @Mapping(source = "order.restaurant.name", target = "restaurant")
+    @Mapping(source = "order.ordersDishes", target = "orderDishResponse")
     OrderResponse toOrderResponse(Order order);
 
-    @Mapping(target = "restaurant", source = "order.restaurant.name")
+//    @Mapping(source = "order.orderDate", target = "orderDate", dateFormat = "yyyy-MM-dd'T'HH:mm:ss")
+    @Mapping(source = "order.restaurant.name", target = "restaurant")
+    @Mapping(source = "order.ordersDishes", target = "orderDishResponse")
     List<OrderResponse> toOrderResponseList(List<Order> orderList);
 
 }

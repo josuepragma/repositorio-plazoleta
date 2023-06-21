@@ -11,8 +11,6 @@ import java.util.List;
 @Setter
 public class OrderRequest {
 
-    @NotNull(message = "ID CHEF field is required")
-    @Positive(message = "ID CHEF must be positive integer and greater than zero")
     private Integer idChef;
 
     @NotNull(message = "ID RESTAURANT field is required")

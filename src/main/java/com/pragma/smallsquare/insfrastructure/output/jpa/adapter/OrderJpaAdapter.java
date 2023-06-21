@@ -1,12 +1,14 @@
 package com.pragma.smallsquare.insfrastructure.output.jpa.adapter;
 
 import com.pragma.smallsquare.domain.model.Order;
+import com.pragma.smallsquare.domain.model.Restaurant;
 import com.pragma.smallsquare.domain.spi.IOrderPersistencePort;
 import com.pragma.smallsquare.insfrastructure.output.jpa.entity.OrderDishEntity;
 import com.pragma.smallsquare.insfrastructure.output.jpa.entity.OrderEntity;
+import com.pragma.smallsquare.insfrastructure.output.jpa.entity.RestaurantEntity;
 import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.IOrderEntityMapper;
+import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.IRestaurantEntityMapper;
 import com.pragma.smallsquare.insfrastructure.output.jpa.repository.IOrderRepository;
-import com.pragma.smallsquare.insfrastructure.util.StatusEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +22,8 @@ public class OrderJpaAdapter implements IOrderPersistencePort {
 
     private final IOrderRepository orderRepository;
     private final IOrderEntityMapper orderEntityMapper;
+
+    private final IRestaurantEntityMapper restaurantEntityMapper;
 
     @Override
     public void saveOrder(Order order) {
@@ -48,10 +52,12 @@ public class OrderJpaAdapter implements IOrderPersistencePort {
     }
 
     @Override
-    public List<Order> getAllOrdersFilteredByStatus(String status, int page, int size) {
+    public List<Order> getAllOrdersFilteredByStatusAndRestaurant(String status, int page, int size, Restaurant restaurant) {
         Pageable pageable = PageRequest.of(page, size);
 
-        List<OrderEntity> orderEntityList = orderRepository.findAllByStatus(status, pageable);
+        RestaurantEntity restaurantEntity = restaurantEntityMapper.toEntity(restaurant);
+
+        List<OrderEntity> orderEntityList = orderRepository.findAllByStatusAndRestaurant(status, restaurantEntity, pageable);
         return orderEntityMapper.toOrderList(orderEntityList);
     }
 

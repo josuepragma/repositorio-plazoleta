@@ -8,6 +8,6 @@ import java.util.List;
 public interface IOrderHandler {
     void saveNewOrderDto(OrderRequest orderRequest, Integer currentCustomerId);
 
-    List<OrderResponse> getAllOrdersFilteredByStatus(String status, int page, int size);
+    List<OrderResponse> getAllOrdersFilteredByStatusAndRestaurant(String status, int page, int size, Integer employeeUserId);
 
 }

@@ -2,7 +2,6 @@ package com.pragma.smallsquare.insfrastructure.output.jpa.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,7 +11,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -31,6 +29,9 @@ public class OrderEntity {
     RestaurantEntity restaurant;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    List<OrderDishEntity> ordersDishes = new ArrayList<>();
+    List<OrderDishEntity> ordersDishes;
 
+    public OrderEntity() {
+        ordersDishes = new ArrayList<>();
+    }
 }

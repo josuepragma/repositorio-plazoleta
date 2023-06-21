@@ -9,11 +9,10 @@ import java.util.Optional;
 
 public interface IRestaurantRepository extends JpaRepository<RestaurantEntity, Integer> {
 
-    Optional<RestaurantEntity> findByName(String restaurantName);
+    Optional<RestaurantEntity> findByIdOwner(Integer idOwner);
 
     Optional<RestaurantEntity> findByNit(String restaurantNit);
 
     List<RestaurantEntity> findAllByOrderByName(Pageable pageable);
 
-    void deleteByNit(String restaurantNit);
 }
