@@ -33,4 +33,14 @@ public class OrderUseCase implements IOrderServicePort {
     public List<Order> getAllOrdersFilteredByStatusAndRestaurant(String status, int page, int size, Restaurant restaurant) {
         return orderPersistencePort.getAllOrdersFilteredByStatusAndRestaurant(status, page, size, restaurant);
     }
+
+    @Override
+    public Order getOrderById(Integer idOrder) {
+        return orderPersistencePort.getOrderById(idOrder);
+    }
+
+    @Override
+    public void updateEmployeeIdAndStatus(Order order) {
+        orderPersistencePort.updateEmployeeIdAndStatus(order);
+    }
 }

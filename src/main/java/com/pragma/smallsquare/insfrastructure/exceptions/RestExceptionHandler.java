@@ -1,6 +1,7 @@
 package com.pragma.smallsquare.insfrastructure.exceptions;
 
 
+import com.pragma.smallsquare.application.exceptions.InvalidAssignedEmployeeException;
 import com.pragma.smallsquare.application.exceptions.OrderStatusInProgressException;
 import com.pragma.smallsquare.application.exceptions.UnauthorizedUserException;
 import com.pragma.smallsquare.application.exceptions.UserIsNoOwnerException;
@@ -107,8 +108,24 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
+    @ExceptionHandler(OrderNotFoundException.class)
+    protected ResponseEntity<Object> handleOrderNotFoundException(OrderNotFoundException ex) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+
+        return buildResponseEntity(apiError);
+    }
+
     @ExceptionHandler(OrderStatusInProgressException.class)
     protected ResponseEntity<Object> handleOrderStatusInProgressException(OrderStatusInProgressException ex) {
+        ApiError apiError = new ApiError(HttpStatus.CONFLICT);
+        apiError.setMessage(ex.getMessage());
+
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(InvalidAssignedEmployeeException.class)
+    protected ResponseEntity<Object> handleInvalidAssignedEmployeeException(InvalidAssignedEmployeeException ex) {
         ApiError apiError = new ApiError(HttpStatus.CONFLICT);
         apiError.setMessage(ex.getMessage());
 

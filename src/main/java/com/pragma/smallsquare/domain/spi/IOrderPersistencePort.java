@@ -13,4 +13,8 @@ public interface IOrderPersistencePort {
 
     List<Order> getAllOrdersFilteredByStatusAndRestaurant(String status, int page, int size, Restaurant restaurant);
 
+    void updateEmployeeIdAndStatus(Order order);
+
+    Order getOrderById(Integer id);
+
 }

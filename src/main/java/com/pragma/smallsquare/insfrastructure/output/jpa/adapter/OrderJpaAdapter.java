@@ -3,6 +3,7 @@ package com.pragma.smallsquare.insfrastructure.output.jpa.adapter;
 import com.pragma.smallsquare.domain.model.Order;
 import com.pragma.smallsquare.domain.model.Restaurant;
 import com.pragma.smallsquare.domain.spi.IOrderPersistencePort;
+import com.pragma.smallsquare.insfrastructure.exceptions.OrderNotFoundException;
 import com.pragma.smallsquare.insfrastructure.output.jpa.entity.OrderDishEntity;
 import com.pragma.smallsquare.insfrastructure.output.jpa.entity.OrderEntity;
 import com.pragma.smallsquare.insfrastructure.output.jpa.entity.RestaurantEntity;
@@ -59,6 +60,20 @@ public class OrderJpaAdapter implements IOrderPersistencePort {
 
         List<OrderEntity> orderEntityList = orderRepository.findAllByStatusAndRestaurant(status, restaurantEntity, pageable);
         return orderEntityMapper.toOrderList(orderEntityList);
+    }
+
+    @Override
+    public void updateEmployeeIdAndStatus(Order order) {
+
+    }
+
+    @Override
+    public Order getOrderById(Integer idOrder) {
+
+        OrderEntity orderEntity = orderRepository.findById(idOrder)
+                .orElseThrow(() -> new OrderNotFoundException("Order Not Found with id = " + idOrder));
+
+        return orderEntityMapper.toOrder(orderEntity);
     }
 
 }

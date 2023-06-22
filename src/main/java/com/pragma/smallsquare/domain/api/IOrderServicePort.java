@@ -12,4 +12,8 @@ public interface IOrderServicePort {
     Order getLastOrderByCustomerId(Integer customerId);
 
     List<Order> getAllOrdersFilteredByStatusAndRestaurant(String status, int page, int size, Restaurant restaurant);
+
+    Order getOrderById(Integer id);
+
+    void updateEmployeeIdAndStatus(Order order);
 }
