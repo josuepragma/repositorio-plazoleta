@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class TwilioSmsSender {
 
     @Value("${twilio.account-sid}")
-    public static String ACCOUNT_SID;
+    public static final String ACCOUNT_SID = "";
     @Value("${twilio.auth-token}")
     public static String AUTH_TOKEN;
     @Value("${twilio.phone-number}")
