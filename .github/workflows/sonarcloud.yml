@@ -20,7 +20,8 @@ jobs:
           distribution: adopt
 
       - name: Build and run tests
-        run: ./gradlew clean build
+#        run: ./gradlew clean build
+        run: ./gradlew sonarqube
 
       - name: SonarCloud analysis
         uses: sonarsource/sonarcloud-github-action@master
