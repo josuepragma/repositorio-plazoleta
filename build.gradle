@@ -57,6 +57,18 @@ dependencyManagement {
     }
 }
 
+jacoco {
+    toolVersion = '0.8.7' // Versión de Jacoco
+    reportsDir = file("$buildDir/reports/jacoco") // Directorio de los informes de Jacoco
+}
+
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+jacocoTestReport {
+    dependsOn test
 }
