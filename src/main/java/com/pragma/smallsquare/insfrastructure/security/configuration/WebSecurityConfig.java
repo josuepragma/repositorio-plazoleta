@@ -30,6 +30,8 @@ public class WebSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeRequests()
                 .antMatchers(
+                        "/small-square/josue",
+//                        "/small-square/dish/restaurant/{idRestaurant}/category/{idCategory}/list**",
                         "/v2/api-docs",
                         "/v3/api-docs",
                         "/v3/api-docs/**",

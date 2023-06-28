@@ -6,12 +6,16 @@ spring:
     name: smallsquare-microservice
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/small-square
-    username: postgres
-    password: 1234
-#    url: jdbc:postgresql://database-1.cm2dbp6lmztp.us-east-1.rds.amazonaws.com:5432/small-square
-#    username: postgres
-#    password: postgres
+    #    url: jdbc:postgresql://localhost:5432/small-square
+    #    username: postgres
+    #    password: 1234
+    #    url: jdbc:postgresql://database-1.cm2dbp6lmztp.us-east-1.rds.amazonaws.com:5432/small-square
+    #    username: postgres
+    #    password: postgres
+    #    driverClassName: org.postgresql.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     driverClassName: org.postgresql.Driver
 
   jpa:
@@ -27,3 +31,8 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+
+feign:
+  user:
+    url: ${FEIGN_USER_URL}
+#    url: 192.168.0.6:8090
