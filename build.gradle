@@ -71,10 +71,6 @@ test {
     finalizedBy jacocoTestReport
 }
 jacocoTestReport {
-    reports {
-        xml.enabled true // Genera informe XML
-        html.enabled true // Genera informe HTML
-    }
     dependsOn test // Ejecuta la tarea de prueba antes de generar el informe de cobertura
 }
 
@@ -82,6 +78,5 @@ sonarqube {
     properties {
         property 'sonar.projectKey', 'josuepragma'
         property 'sonar.projectName', 'repositorio-plazoleta'
-        // Otros ajustes de configuración de SonarQube
     }
 }
