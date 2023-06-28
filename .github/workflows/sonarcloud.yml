@@ -19,9 +19,6 @@ jobs:
           java-version: '11'
           distribution: adopt
 
-      - name: Change wrapper permissions
-        run: attrib +x gradlew
-
       - name: Build and run tests
         run: ./gradlew clean build
 
