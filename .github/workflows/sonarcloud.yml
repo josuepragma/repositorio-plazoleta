@@ -20,7 +20,7 @@ jobs:
           distribution: adopt
 
       - name: Change wrapper permissions
-        run: icacls +x gradlew
+        run: attrib +x gradlew
 
       - name: Build and run tests
         run: ./gradlew clean build
