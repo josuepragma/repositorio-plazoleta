@@ -1,8 +1,9 @@
 plugins {
-    id 'java'
     id 'org.springframework.boot' version '2.7.12'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
     id 'jacoco'
+//    id 'org.sonarqube' version '3.5.0.2730'
     id 'org.springdoc.openapi-gradle-plugin' version '1.3.4'
 }
 
@@ -34,7 +35,6 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.5.2.Final'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'com.twilio.sdk:twilio:9.6.0'
-    implementation 'org.postgresql:postgresql'
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -70,5 +70,9 @@ test {
     finalizedBy jacocoTestReport
 }
 jacocoTestReport {
-    dependsOn test
+    reports {
+        xml.enabled true // Genera informe XML
+        html.enabled true // Genera informe HTML
+    }
+    dependsOn test // Ejecuta la tarea de prueba antes de generar el informe de cobertura
 }

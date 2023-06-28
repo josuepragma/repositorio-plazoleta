@@ -25,9 +25,9 @@ jobs:
       - name: SonarCloud analysis
         uses: sonarsource/sonarcloud-github-action@master
         env:
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          organization: "josuepragma"
-          token: ${{ secrets.SONAR_TOKEN }}
-          distribution: "sonarcloud"
+#        with:
+#          organization: "josuepragma"
+#          token: ${{ secrets.SONAR_TOKEN }}
+#          distribution: "sonarcloud"
