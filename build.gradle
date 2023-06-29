@@ -58,6 +58,15 @@ dependencyManagement {
     }
 }
 
+sonarqube {
+    properties {
+        property "sonar.projectKey", "josuepragma_repositorio-plazoleta"
+        property "sonar.organization", "josuepragma"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
+    }
+}
+
 //jacoco {
 //    toolVersion = '0.8.7' // Versión de Jacoco
 //    reportsDir = file("$buildDir/reports/jacoco") // Directorio de los informes de Jacoco
@@ -76,10 +85,4 @@ jacocoTestReport {
         html.enabled true // Genera informe HTML
     }
     dependsOn test // Ejecuta la tarea de prueba antes de generar el informe de cobertura
-}
-
-sonarqube {
-    properties {
-        property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
-    }
 }
