@@ -1,4 +1,4 @@
-name: SonarCloud Analysis
+name: SonarCloud
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
 
 jobs:
   sonarcloud:
+    name: SonarCloud Analysis
     runs-on: ubuntu-latest
 
     steps:
@@ -19,21 +20,16 @@ jobs:
           java-version: '11'
           distribution: adopt
 
-      - name: Cache SonarCloud dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
+#      - name: Cache SonarCloud dependencies
+#        uses: actions/cache@v2
+#        with:
+#          path: ~/.sonar/cache
+#          key: ${{ runner.os }}-sonar
 
-      - name: Build and run tests
-        run: ./gradlew clean build
+#      - name: Build and run tests
+#        run: ./gradlew clean build
 
-      - name: SonarCloud analysis
-        uses: sonarsource/sonarcloud-github-action@master
+      - name: SonarQube analysis
+        uses: SonarSource/sonarcloud-github-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          organization: "josuepragma"
-#          token: ${{ secrets.SONAR_TOKEN }}
-#          distribution: "sonarcloud"
