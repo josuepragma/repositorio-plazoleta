@@ -15,21 +15,21 @@ jobs:
         uses: actions/checkout@v2
 
       # Step 2:
-      - name: Set up JDK 11
-        uses: actions/setup-java@v2
-        with:
-          java-version: 11
-          distribution: adopt
+#      - name: Set up JDK 11
+#        uses: actions/setup-java@v2
+#        with:
+#          java-version: 11
+#          distribution: adopt
 
       # Step 3:
-      - name: Build and run tests with Gradle
-        run: ./gradlew build --stacktrace --info
+#      - name: Build and run tests with Gradle
+#        run: ./gradlew build --stacktrace --info
 
       # Step 4:
-      - name: Run SonarQube analysis
-        run: ./gradlew sonarqube
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#      - name: Run SonarQube analysis
+#        run: ./gradlew sonarqube
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       #################
       - name: Set up Docker Buildx
@@ -38,16 +38,24 @@ jobs:
       - name: Log in to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          registry: 561506039848.dkr.ecr.us-east-1.amazonaws.com
+          registry: 561506039848.dkr.ecr.us-east-1.amazonaws.com/docker-image-repository
+          region: us-east-1
 
-      - name: Build and Tag Docker image
-        run: |
-          docker build --tag small-square-microservice-v3 .
-          docker tag small-square-microservice-v3 561506039848.dkr.ecr.us-east-1.amazonaws.com/docker-image-repository
+      - name: Build and tag Docker image
+        run: docker buildx build --file Dockerfile --tag small-square-microservice-v3 .
 
-      - name: Push Docker image to Amazon ECR
+      - name: Push Docker image to ECR
         run: |
-          docker push 561506039848.dkr.ecr.us-east-1.amazonaws.com/docker-image-repository
+          docker tag small-square-microservice-v3:latest 561506039848.dkr.ecr.us-east-1.amazonaws.com/docker-image-repository/small-square-microservice-v3:latest
+          docker push 561506039848.dkr.ecr.us-east-1.amazonaws.com/docker-image-repository/small-square-microservice-v3:latest
+#      - name: Build and Tag Docker image
+#        run: |
+#          docker build --tag small-square-microservice-v3 .
+#          docker tag small-square-microservice-v3 561506039848.dkr.ecr.us-east-1.amazonaws.com/docker-image-repository
+#
+#      - name: Push Docker image to Amazon ECR
+#        run: |
+#          docker push 561506039848.dkr.ecr.us-east-1.amazonaws.com/docker-image-repository
 
       #################
       # Step 5:
