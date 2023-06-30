@@ -34,15 +34,20 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Enviar notificación a Google Chat
-        run: |
-          curl -X POST \
-            -H 'Content-Type: application/json' \
-            -H "Authorization: Bearer ${{ secrets.GOOGLE_CHAT_CREDENTIALS }}" \
-            -d '{
-              "text": "¡Hola desde GitHub Actions!"
-            }' \
-            "https://chat.googleapis.com/v1/spaces/AAAAyNMOGBE/messages"
+      - name: Google Chat Notification
+        uses: Co-qn/google-chat-notification@releases/v1
+        with:
+          name: Build
+          url: https://chat.googleapis.com/v1/spaces/AAAAyNMOGBE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=L2aChJXUj6_OjZdkccYE_YSAkdlTJNWKEpfv2PHiPNw
+          status: ${{ job.status }}
+        if: always()
+
+#      - name: SendMessage
+#        if: always() && steps.deploy.outcome == 'failure'
+#        uses: teknatha136/actions-google-chat-text-message@main
+#        with:
+#          google-chat-webhook: https://chat.googleapis.com/v1/spaces/AAAAtZdZgL4/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=MPS65zGggGsV6N133-2-DkLYsmnqViHem50_AnYIl-o
+#          text-message: Ocurrió un error al desplegar. Ambiente- ${{ env.AWS_EB_ENVIRONMENT }}
 
       - name: Log in to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
