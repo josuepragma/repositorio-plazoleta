@@ -54,7 +54,7 @@ jobs:
             -d '{
               "text": "¡Hola desde GitHub Actions!"
             }' \
-            "https://chat.googleapis.com/v1/space/AAAAyNMOGBE/messages"
+            "https://chat.googleapis.com/v1/spaces/AAAAyNMOGBE/messages"
 
 #      - name: SendMessage
 #        if: always() && steps.deploy.outcome == 'failure'
