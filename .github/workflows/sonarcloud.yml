@@ -39,8 +39,8 @@ jobs:
         run: |
 #          docker build --tag your-image-name .
 #          docker tag your-image-name your-aws-account-id.dkr.ecr.your-region.amazonaws.com/your-repository-name
-          docker build --tag small-square-microservice-v4 .
-          docker tag small-square-microservice-v4 561506039848.dkr.ecr.us-east-1.amazonaws.com/docker-image-repository
+          docker build --tag small-square-microservice-v3 .
+          docker tag small-square-microservice-v3 561506039848.dkr.ecr.us-east-1.amazonaws.com/docker-image-repository
 
       - name: Log in to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
