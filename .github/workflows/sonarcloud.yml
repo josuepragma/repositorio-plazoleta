@@ -35,11 +35,18 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: AKIAYFPC6HAUNWCBSQAO
+          aws-secret-access-key: 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
+          aws-region: us-west-2
+
       - name: Log in to Amazon ECR
+        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
         with:
-          registry: 561506039848.dkr.ecr.us-east-1.amazonaws.com/docker-image-repository
-          region: us-east-1
+          registry: 561506039848.dkr.ecr.us-west-2.amazonaws.com
 
       - name: Build and tag Docker image
         run: docker buildx build --file Dockerfile --tag small-square-microservice-v3 .
