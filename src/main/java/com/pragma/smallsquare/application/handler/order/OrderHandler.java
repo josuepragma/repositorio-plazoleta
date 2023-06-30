@@ -26,7 +26,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -45,7 +44,6 @@ public class OrderHandler implements IOrderHandler {
 
     @Override
     public void saveNewOrderDto(OrderRequest orderRequest, Integer currentCustomerId) {
-        log.warn("<--- FROM ORDER HANDLER --->");
         Order lastOrder = orderServicePort.getLastOrderByCustomerId(currentCustomerId);
         if (lastOrder != null) {
             String status = lastOrder.getStatus();
@@ -64,7 +62,6 @@ public class OrderHandler implements IOrderHandler {
 
         List<OrderDish> orderDishList = orderDishRequestMapper.toOrderDishList(orderRequest.getOrdersDishes());
         for (OrderDish item : orderDishList) {
-            log.warn("<--- ID DISH = " + item.getIdDish() + "| QUANTITY = " + item.getQuantity() + " --->");
             order.getOrdersDishes().add(item);
         }
 

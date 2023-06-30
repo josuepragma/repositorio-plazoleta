@@ -3,9 +3,12 @@ server:
 
 spring:
   datasource:
-    url: ${DATABASE_URL_TEST}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/small-square
+    username: postgres
+    password: 1234
+#    url: ${BD_URL}
+#    username: ${DATABASE_USERNAME}
+#    password: ${DATABASE_PASSWORD}
     platform: postgres
     driverClassName: org.postgresql.Driver
   application:
