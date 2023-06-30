@@ -46,14 +46,22 @@ jobs:
         run: |
           docker push 561506039848.dkr.ecr.us-east-1.amazonaws.com/docker-image-repository
 
-      - name: Notify fails in Google chat
-        if: ${{ failure() }}
-        env:
-          GOOGLE_CHAT_WEBHOOK_URL: ${{ secrets.GOOGLE_CHAT_WEBHOOK_URL }}
+      - name: Enviar notificación a Google Chat
         run: |
-          curl -X POST -H 'Content-Type: application/json' -d '{
-            "text": "Se produjo un fallo en el flujo de trabajo de GitHub Actions. Revisa el registro para obtener más detalles: ${{ github.event.workflow_run.url }}"
-          }' $GOOGLE_CHAT_WEBHOOK_URL
+          curl -X POST \
+            -H 'Content-Type: application/json' \
+            -H "Authorization: Bearer ${{ secrets.GOOGLE_CHAT_CREDENTIALS }}" \
+            -d '{
+              "text": "¡Hola desde GitHub Actions!"
+            }' \
+            "https://chat.googleapis.com/v1/space/AAAAyNMOGBE/messages"
+
+#      - name: SendMessage
+#        if: always() && steps.deploy.outcome == 'failure'
+#        uses: teknatha136/actions-google-chat-text-message@main
+#        with:
+#          google-chat-webhook: https://chat.googleapis.com/v1/spaces/AAAAtZdZgL4/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=MPS65zGggGsV6N133-2-DkLYsmnqViHem50_AnYIl-o
+#          text-message: Ocurrió un error al desplegar. Ambiente- ${{ env.AWS_EB_ENVIRONMENT }}
       ##################################################################################################################
 
 #      # Step 5:
