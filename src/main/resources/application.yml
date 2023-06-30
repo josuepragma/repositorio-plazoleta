@@ -11,13 +11,12 @@ spring:
     #    url: jdbc:postgresql://database-1.cm2dbp6lmztp.us-east-1.rds.amazonaws.com:5432/small-square
     #    username: postgres
     #    password: postgres
-    #    driverClassName: org.postgresql.Driver
-#    url: ${DATABASE_URL}
-#    username: ${DATABASE_USERNAME}
-#    password: ${DATABASE_PASSWORD}
-    url: jdbc:postgresql://database-1.cm2dbp6lmztp.us-east-1.rds.amazonaws.com:5432/small-square
-    username: postgres
-    password: postgres
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+#    url: jdbc:postgresql://database-1.cm2dbp6lmztp.us-east-1.rds.amazonaws.com:5432/small-square
+#    username: postgres
+#    password: postgres
     platform: postgres
     driverClassName: org.postgresql.Driver
 
@@ -37,7 +36,7 @@ application:
 
 feign:
   user:
-#    url: ${FEIGN_USER_URL}
+    #    url: ${FEIGN_USER_URL}
     url: 192.168.0.6:8090
 
 twilio:

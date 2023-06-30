@@ -19,12 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      #      - name: Cache SonarCloud dependencies
-      #        uses: actions/cache@v2
-      #        with:
-      #          path: ~/.sonar/cache
-      #          key: ${{ runner.os }}-sonar
-
       - name: Build and run tests with Gradle
         run: ./gradlew build --stacktrace --info
 
