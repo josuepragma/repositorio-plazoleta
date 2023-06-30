@@ -45,6 +45,15 @@ jobs:
       - name: Push Docker image to Amazon ECR
         run: |
           docker push 561506039848.dkr.ecr.us-east-1.amazonaws.com/docker-image-repository
+
+      - name: Notify fails in Google chat
+        if: ${{ failure() }}
+        env:
+          GOOGLE_CHAT_WEBHOOK_URL: ${{ secrets.GOOGLE_CHAT_WEBHOOK_URL }}
+        run: |
+          curl -X POST -H 'Content-Type: application/json' -d '{
+            "text": "Se produjo un fallo en el flujo de trabajo de GitHub Actions. Revisa el registro para obtener más detalles: ${{ github.event.workflow_run.url }}"
+          }' $GOOGLE_CHAT_WEBHOOK_URL
       ##################################################################################################################
 
 #      # Step 5:
