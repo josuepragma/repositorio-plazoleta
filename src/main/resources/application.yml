@@ -11,12 +11,13 @@ spring:
     #    url: jdbc:postgresql://database-1.cm2dbp6lmztp.us-east-1.rds.amazonaws.com:5432/small-square
     #    username: postgres
     #    password: postgres
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
-#    url: jdbc:postgresql://database-1.cm2dbp6lmztp.us-east-1.rds.amazonaws.com:5432/small-square
+#    url: ${DATABASE_URL}
+#    username: ${DATABASE_USERNAME}
+#    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://database-1.cm2dbp6lmztp.us-east-1.rds.amazonaws.com:5432/small-square
 #    username: postgres
-#    password: postgres
+    username: ${DATABASE_USERNAME}
+    password: postgres
     platform: postgres
     driverClassName: org.postgresql.Driver
 
