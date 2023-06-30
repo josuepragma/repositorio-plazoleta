@@ -60,7 +60,7 @@ jobs:
           name: Build
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
           status: ${{ job.status }}
-        if: always() && steps.deploy.outcome == 'failure'
+        if: always()
 
 
 #      # Step 6:
