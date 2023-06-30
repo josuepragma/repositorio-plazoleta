@@ -15,8 +15,7 @@ spring:
 #    username: ${DATABASE_USERNAME}
 #    password: ${DATABASE_PASSWORD}
     url: jdbc:postgresql://database-1.cm2dbp6lmztp.us-east-1.rds.amazonaws.com:5432/small-square
-#    username: postgres
-    username: ${DATABASE_USERNAME}
+    username: postgres
     password: postgres
     platform: postgres
     driverClassName: org.postgresql.Driver
