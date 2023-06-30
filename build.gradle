@@ -62,27 +62,26 @@ sonarqube {
         property 'sonar.projectKey', 'josuepragma_repositorio-plazoleta'
         property 'sonar.organization', 'josuepragma'
         property 'sonar.host.url', 'https://sonarcloud.io'
-        property 'sonar.login', '12e7fbadff053da3dfdee6f8cea79099d6216b56'
+//        property 'sonar.login', '12e7fbadff053da3dfdee6f8cea79099d6216b56'
 //        property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
     }
 }
-
-//jacoco {
-//    toolVersion = '0.8.7' // Versión de Jacoco
-//    reportsDir = file("$buildDir/reports/jacoco") // Directorio de los informes de Jacoco
-//}
 
 tasks.named('test') {
     useJUnitPlatform()
 }
 
-test {
+jacoco {
+    toolVersion = '0.8.7' // Versión de Jacoco
+//    reportsDir = file("$buildDir/reports/jacoco") // Directorio de los informes de Jacoco
+}
+tasks.test {
     finalizedBy jacocoTestReport
 }
 jacocoTestReport {
-//    reports {
-//        xml.enabled true // Genera informe XML
-//        html.enabled true // Genera informe HTML
-//    }
+    reports {
+        xml.enabled true // Genera informe XML
+        html.enabled true // Genera informe HTML
+    }
     dependsOn test // Ejecuta la tarea de prueba antes de generar el informe de cobertura
 }
