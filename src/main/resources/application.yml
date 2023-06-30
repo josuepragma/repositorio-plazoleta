@@ -2,29 +2,20 @@ server:
   port: 8091
 
 spring:
-  application:
-    name: smallsquare-microservice
   datasource:
-    #    url: jdbc:postgresql://localhost:5432/small-square
-    #    username: postgres
-    #    password: 1234
-    #    url: jdbc:postgresql://database-1.cm2dbp6lmztp.us-east-1.rds.amazonaws.com:5432/small-square
-    #    username: postgres
-    #    password: postgres
-#    url: ${DATABASE_URL}
-#    username: ${DATABASE_USERNAME}
-#    password: ${DATABASE_PASSWORD}
-    url: jdbc:postgresql://database-1.cm2dbp6lmztp.us-east-1.rds.amazonaws.com:5432/small-square
-    username: postgres
-    password: postgres
+    url: ${DATABASE_URL_TEST}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     platform: postgres
     driverClassName: org.postgresql.Driver
+  application:
+    name: smallsquare-microservice
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-    open-in-view: true
+    open-in-view: false
 
 application:
   security:
@@ -36,10 +27,9 @@ application:
 
 feign:
   user:
-    #    url: ${FEIGN_USER_URL}
     url: 192.168.0.6:8090
 
 twilio:
-  account-sid: ${TWILIO_ACCOUNT_SID}
-  auth-token: ${TWILIO_AUTH_TOKEN}
-  phone-number: ${TWILIO_PHONE_NUMBER}
+  account-sid: AC3047a197f006fc8c80c61b4fb6493ed3
+  auth-token: 5837bb5a9a6c04d74df2dd639719c8a3
+  phone-number: +14178043060

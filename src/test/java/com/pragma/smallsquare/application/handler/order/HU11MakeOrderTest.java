@@ -18,9 +18,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import javax.validation.Validation;
-import javax.validation.Validator;
-
 import java.util.Date;
 import java.util.List;
 
@@ -40,14 +37,11 @@ class HU11MakeOrderTest {
     @Mock
     private IOrderDishRequestMapper orderDishRequestMapper;
 
-    private Validator validator;
     private Order order;
     private List<OrderDish> orderDishList;
 
     @BeforeEach
     void setUp() {
-        validator = Validation.buildDefaultValidatorFactory().getValidator();
-
         Restaurant restaurant = new Restaurant();
         restaurant.setId(1);
 

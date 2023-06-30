@@ -11,13 +11,11 @@ import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.IOrderEntityMapp
 import com.pragma.smallsquare.insfrastructure.output.jpa.mapper.IRestaurantEntityMapper;
 import com.pragma.smallsquare.insfrastructure.output.jpa.repository.IOrderRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-@Slf4j
 @RequiredArgsConstructor
 public class OrderJpaAdapter implements IOrderPersistencePort {
 
@@ -28,11 +26,9 @@ public class OrderJpaAdapter implements IOrderPersistencePort {
 
     @Override
     public void saveOrder(Order order) {
-        log.warn("<--- FROM ORDER JPA ADAPTER --->");
         OrderEntity orderEntity = orderEntityMapper.toOrderEntity(order);
 
         for (OrderDishEntity item : orderEntity.getOrdersDishes()) {
-            log.warn("<--- ID DISH = " + item.getIdDish() + "| QUANTITY = " + item.getQuantity() + " --->");
             item.setOrder(orderEntity);
         }
         orderRepository.save(orderEntity);
@@ -40,12 +36,9 @@ public class OrderJpaAdapter implements IOrderPersistencePort {
 
     @Override
     public Order getLastOrderByCustomerId(Integer customerId) {
-        log.warn("<--- FROM ORDER JPA ADAPTER --->");
         Pageable pageable = PageRequest.of(0, 1);
 
-        log.warn("<--- getLastOrderByCustomerId(Integer customerId) --->");
         if (orderRepository.findLastOrderByCustomerId(customerId, pageable).isEmpty()) {
-            log.warn("<--- IF orderEntity == null --->");
             return null;
         }
 
