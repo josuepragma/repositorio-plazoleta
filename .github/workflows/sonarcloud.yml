@@ -53,7 +53,7 @@ jobs:
 
       - name: Push Docker image to ECR
         run: |
-          docker tag small-square-microservice-v3:latest 561506039848.dkr.ecr.us-west-2.amazonaws.com/small-square-microservice-v3:latest
+          docker tag small-square-microservice-v3 561506039848.dkr.ecr.us-west-2.amazonaws.com/small-square-microservice-v3:latest
           docker push 561506039848.dkr.ecr.us-west-2.amazonaws.com/small-square-microservice-v3:latest
 
 #      - name: Build and Tag Docker image
