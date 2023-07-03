@@ -87,22 +87,37 @@ jobs:
           aws-secret-access-key: ${{ secrets.IAM_SECRET_KEY }}
           aws-region: us-east-1
 
+      ##########################################
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get install -y awscli
+
+      - name: Upload JAR to S3 Bucket
+        run: |
+          aws s3 cp ./build/libs/small-square-microservice-1.0.jar s3://my-bucket-jar/small-square-microservice-1.0.jar
+
+      - name: Deploy to Elastic Beanstalk
+        run: |
+          aws elasticbeanstalk create-application-version --application-name MicroservicioPlazoleta --version-label v1 --source-bundle S3Bucket=my-bucket-jar,S3Key=small-square-microservice-1.0.jar
+          aws elasticbeanstalk update-environment --environment-name MicroservicioPlazoleta-env --version-label v1
+      ##########################################
+
       # Step 4:
-      - name: Upload package to S3 bucket
-        run: aws s3 cp deploy_package.zip s3://my-awesome-app-deploy-andrey/
+#      - name: Upload package to S3 bucket
+#        run: aws s3 cp deploy_package.zip s3://my-awesome-app-deploy-andrey/
 
       # Step 5:
-      - name: Create new ElasticBeanstalk Application Version
-        run: |
-          aws elasticbeanstalk create-application-version \
-          --application-name MicroservicioPlazoleta \
-          --source-bundle S3Bucket="my-awesome-app-deploy-andrey",S3Key="deploy_package.zip" \
-          --version-label "ver-${{ github.sha }}" \
-          --description "commit-sha-${{ github.sha }}"
+#      - name: Create new ElasticBeanstalk Application Version
+#        run: |
+#          aws elasticbeanstalk create-application-version \
+#          --application-name MicroservicioPlazoleta \
+#          --source-bundle S3Bucket="my-awesome-app-deploy-andrey",S3Key="deploy_package.zip" \
+#          --version-label "ver-${{ github.sha }}" \
+#          --description "commit-sha-${{ github.sha }}"
 
       # Step 6:
-      - name: Deploy new ElasticBeanstalk Application Version
-        run: aws elasticbeanstalk update-environment --environment-name MicroservicioPlazoleta-env --version-label "ver-${{ github.sha }}"
+#      - name: Deploy new ElasticBeanstalk Application Version
+#        run: aws elasticbeanstalk update-environment --environment-name MicroservicioPlazoleta-env --version-label "ver-${{ github.sha }}"
 
       # Step 8:
       - name: Google Chat Notification

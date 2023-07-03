@@ -27,7 +27,8 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+//        http.csrf(csrf -> csrf.disable())
+        http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
                         "/small-square/josue",
