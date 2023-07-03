@@ -38,12 +38,31 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       # Step 5: Configure AWS Credentials
-#      - name: Configure AWS credentials
-#        uses: aws-actions/configure-aws-credentials@v1
-#        with:
-#          aws-access-key-id: ${{ secrets.IAM_ACCESS_KEY }}
-#          aws-secret-access-key: ${{ secrets.IAM_SECRET_KEY }}
-#          aws-region: us-east-1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.IAM_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.IAM_SECRET_KEY }}
+          aws-region: us-east-1
+
+      ##########################################
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get install -y awscli
+
+      - name: List files in build/libs
+        run: ls -l build/libs
+
+      - name: Upload JAR to S3 Bucket
+        run: |
+          aws s3 cp ./build/libs/small-square-microservice-1.0.jar s3://my-bucket-jar/small-square-microservice-1.0.jar
+
+      - name: Deploy to Elastic Beanstalk
+        run: |
+          aws elasticbeanstalk create-application-version --application-name MicroservicioPlazoleta --version-label v1 --source-bundle S3Bucket=my-bucket-jar,S3Key=small-square-microservice-1.0.jar
+          aws elasticbeanstalk update-environment --environment-name MicroservicioPlazoleta-env --version-label v1
+      ##########################################
+
 
       # Step 6: Sign in Amazon ECR
 #      - name: Login to Amazon ECR
@@ -71,44 +90,44 @@ jobs:
 #          status: ${{ job.status }}
 #        if: always()
 
-  deploy:
-    needs: build
-    name: Deploy to Elastic Beanstalk
-    runs-on: ubuntu-latest
-
-    steps:
+#  deploy:
+#    needs: build
+#    name: Deploy to Elastic Beanstalk
+#    runs-on: ubuntu-latest
+#
+#    steps:
       # Step 1: Download repository
-      - name: Checkout code again
-        uses: actions/checkout@v2
+#      - name: Checkout code again
+#        uses: actions/checkout@v2
 
       # Step 2:
 #      - name: Create ZIP deployment package
 #        run: zip -r deploy_package.zip ./
 
       # Step 3:
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.IAM_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.IAM_SECRET_KEY }}
-          aws-region: us-east-1
+#      - name: Configure AWS Credentials
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+#          aws-access-key-id: ${{ secrets.IAM_ACCESS_KEY }}
+#          aws-secret-access-key: ${{ secrets.IAM_SECRET_KEY }}
+#          aws-region: us-east-1
 
       ##########################################
-      - name: Install AWS CLI
-        run: |
-          sudo apt-get install -y awscli
-
-      - name: List files in build/libs
-        run: ls -l build/libs
-
-      - name: Upload JAR to S3 Bucket
-        run: |
-          aws s3 cp ./build/libs/small-square-microservice-1.0.jar s3://my-bucket-jar/small-square-microservice-1.0.jar
-
-      - name: Deploy to Elastic Beanstalk
-        run: |
-          aws elasticbeanstalk create-application-version --application-name MicroservicioPlazoleta --version-label v1 --source-bundle S3Bucket=my-bucket-jar,S3Key=small-square-microservice-1.0.jar
-          aws elasticbeanstalk update-environment --environment-name MicroservicioPlazoleta-env --version-label v1
+#      - name: Install AWS CLI
+#        run: |
+#          sudo apt-get install -y awscli
+#
+#      - name: List files in build/libs
+#        run: ls -l build/libs
+#
+#      - name: Upload JAR to S3 Bucket
+#        run: |
+#          aws s3 cp ./build/libs/small-square-microservice-1.0.jar s3://my-bucket-jar/small-square-microservice-1.0.jar
+#
+#      - name: Deploy to Elastic Beanstalk
+#        run: |
+#          aws elasticbeanstalk create-application-version --application-name MicroservicioPlazoleta --version-label v1 --source-bundle S3Bucket=my-bucket-jar,S3Key=small-square-microservice-1.0.jar
+#          aws elasticbeanstalk update-environment --environment-name MicroservicioPlazoleta-env --version-label v1
       ##########################################
 
       # Step 4:
