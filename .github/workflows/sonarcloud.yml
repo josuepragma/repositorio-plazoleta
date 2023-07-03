@@ -32,29 +32,54 @@ jobs:
 #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       #################
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: AKIAYFPC6HAUNWCBSQAO
-          aws-secret-access-key: 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
+          aws-access-key-id: ${{ secrets.IAM_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.IAM_SECRET_KEY }}
           aws-region: us-west-2
 
-      - name: Log in to Amazon ECR
+      - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-        with:
-          registry: 561506039848.dkr.ecr.us-west-2.amazonaws.com
 
-      - name: Build and tag Docker image
-        run: docker buildx build --file Dockerfile --tag small-square-microservice-v3 .
-
-      - name: Push Docker image to ECR
+      - name: Build, tag, and push the image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPO_NAME }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker tag small-square-microservice-v3 561506039848.dkr.ecr.us-west-2.amazonaws.com/small-square-microservice-v3:latest
-          docker push 561506039848.dkr.ecr.us-west-2.amazonaws.com/small-square-microservice-v3:latest
+          # Build a docker container and push it to ECR 
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          echo "Pushing image to ECR..."
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v1
+#
+#      - name: Configure AWS credentials
+#        uses: aws-actions/configure-aws-credentials@v1
+#        with:
+#          aws-access-key-id: AKIAYFPC6HAUNWCBSQAO
+#          aws-secret-access-key: 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
+#          aws-region: us-west-2
+#
+#      - name: Log in to Amazon ECR
+#        id: login-ecr
+#        uses: aws-actions/amazon-ecr-login@v1
+#        with:
+#          registry: 561506039848.dkr.ecr.us-west-2.amazonaws.com
+#
+#      - name: Build and tag Docker image
+#        run: docker buildx build --file Dockerfile --tag small-square-microservice-v3 .
+#
+#      - name: Push Docker image to ECR
+#        run: |
+#          docker tag small-square-microservice-v3 561506039848.dkr.ecr.us-west-2.amazonaws.com/small-square-microservice-v3:latest
+#          docker push 561506039848.dkr.ecr.us-west-2.amazonaws.com/small-square-microservice-v3:latest
 
 #      - name: Build and Tag Docker image
 #        run: |
