@@ -32,7 +32,6 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .antMatchers(
                         "/small-square/josue",
-//                        "/small-square/dish/restaurant/{idRestaurant}/category/{idCategory}/list**",
                         "/small-square/dish/restaurant/{idRestaurant}/category/{idCategory}/list**",
                         "/v2/api-docs",
                         "/v3/api-docs",
@@ -45,7 +44,7 @@ public class WebSecurityConfig {
                         "/webjars/**",
                         "/swagger-ui.html").permitAll()
                 .antMatchers(HttpMethod.POST, "/small-square/employee/").hasRole(RoleEnum.OWNER.getName())
-                .antMatchers(HttpMethod.POST, "/small-square/restaurant/**").hasRole(RoleEnum.ADMIN.getName())
+                .antMatchers(HttpMethod.POST, "/small-square/restaurant/").hasRole(RoleEnum.ADMIN.getName())
                 .antMatchers(HttpMethod.GET, "/small-square/restaurant/").hasAnyRole(RoleEnum.ADMIN.getName(), RoleEnum.OWNER.getName())
                 .antMatchers(HttpMethod.POST, "/small-square/dish/").hasRole(RoleEnum.OWNER.getName())
                 .antMatchers(HttpMethod.PUT, "/small-square/dish/{id}").hasRole(RoleEnum.OWNER.getName())
