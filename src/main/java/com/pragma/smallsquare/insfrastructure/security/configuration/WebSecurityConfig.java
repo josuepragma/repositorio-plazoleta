@@ -49,7 +49,7 @@ public class WebSecurityConfig {
                 .antMatchers(HttpMethod.POST, "/small-square/dish/").hasRole(RoleEnum.OWNER.getName())
                 .antMatchers(HttpMethod.PUT, "/small-square/dish/**").hasRole(RoleEnum.OWNER.getName())
                 .antMatchers(HttpMethod.GET, "/small-square/restaurant/list**").hasRole(RoleEnum.CUSTOMER.getName())
-                .antMatchers(HttpMethod.GET, "/small-square/dish/restaurant/{idRestaurant}/category/{idCategory}/list**").hasAnyRole(RoleEnum.ADMIN.getName(), RoleEnum.OWNER.getName(), RoleEnum.CUSTOMER.getName())
+//                .antMatchers(HttpMethod.GET, "/small-square/dish/restaurant/{idRestaurant}/category/{idCategory}/list**").hasAnyRole(RoleEnum.ADMIN.getName(), RoleEnum.OWNER.getName(), RoleEnum.CUSTOMER.getName())
                 .antMatchers(HttpMethod.GET, "/small-square/order/").hasRole(RoleEnum.CUSTOMER.getName())
                 .antMatchers(HttpMethod.GET, "/small-square/order/status/{statusName}/filter**").hasRole(RoleEnum.EMPLOYEE.getName())
                 .anyRequest().authenticated()
