@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build and SonarCloud Analysis
+    name: Build and Publish Docker Image
     runs-on: ubuntu-latest
 
     steps:
@@ -53,15 +53,24 @@ jobs:
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/small-square-microservice-v3:latest
 
       # Step 9:
-      - name: Google Chat Notification
-        uses: Co-qn/google-chat-notification@releases/v1
+      - name: Google Chat Notification v2.0
+        if: always() && steps.deploy.outcome == 'failure'
+        uses: teknatha136/actions-google-chat-text-message@main
         with:
-          name: Build
-          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          status: ${{ job.status }}
-        if: always()
+          google-chat-webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          text-message: Ocurrió un error al construir
 
-      # Step 5: Configure AWS Credentials
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Step 2: Configure AWS Credentials
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -69,9 +78,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.IAM_SECRET_KEY }}
           aws-region: us-east-1
 
+      # Step 3:
       - name: Pull Docker image
         run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/small-square-microservice-v3:latest
 
+      # Step 4:
       - name: Deploy to EBS
         run: |
           aws elasticbeanstalk create-application-version --application-name Small-Square-Docker-v2 \
@@ -79,6 +90,15 @@ jobs:
           --region us-east-1
           aws elasticbeanstalk update-environment --environment-name Small-Square-Docker-v2-env \
           --version-label ${{ github.sha }} --region us-east-1
+
+      # Step 5:
+      - name: Google Chat Notification
+        uses: Co-qn/google-chat-notification@releases/v1
+        with:
+          name: Build
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: ${{ job.status }}
+        if: always()
 
       ##########################################
 #      s3://elasticbeanstalk-us-east-1-561506039848/1688497147692-Dockerrun.aws.json

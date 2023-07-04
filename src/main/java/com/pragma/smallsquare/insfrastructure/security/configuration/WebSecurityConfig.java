@@ -33,6 +33,7 @@ public class WebSecurityConfig {
                 .antMatchers(
                         "/small-square/josue",
 //                        "/small-square/dish/restaurant/{idRestaurant}/category/{idCategory}/list**",
+                        "/small-square/dish/restaurant/{idRestaurant}/category/{idCategory}/list**",
                         "/v2/api-docs",
                         "/v3/api-docs",
                         "/v3/api-docs/**",
