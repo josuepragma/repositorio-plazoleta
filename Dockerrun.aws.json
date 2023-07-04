@@ -1,13 +1,13 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "josuebladek/small-square-microservice-v2:latest",
+    "Name": "josuebladek/small-square-microservice-v3:latest",
     "Update": "true"
   },
   "Ports": [
     {
-      "ContainerPort": 8091,
-      "HostPort": 8091
+      "ContainerPort": 8092,
+      "HostPort": 8092
     }
   ]
 }
