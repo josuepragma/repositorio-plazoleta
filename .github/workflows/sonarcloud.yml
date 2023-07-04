@@ -45,7 +45,7 @@ jobs:
         uses: docker/login-action@v1
         with:
           registry: docker.io
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # Step 8:
@@ -62,6 +62,7 @@ jobs:
 
 
   deploy:
+    name: Deploy to Elastic Beanstalk
     needs: build
     runs-on: ubuntu-latest
 
@@ -86,9 +87,11 @@ jobs:
       - name: Deploy to EBS
         run: |
           aws elasticbeanstalk create-application-version --application-name Small-Square-Docker-v2 \
-          --version-label ${{ github.sha }} --source-bundle S3Bucket=elasticbeanstalk-us-east-1-561506039848,S3Key=1688497147692-Dockerrun.aws.json \
+          --version-label ${{ github.sha }} \
+          --source-bundle S3Bucket=elasticbeanstalk-us-east-1-561506039848,S3Key=1688497147692-Dockerrun.aws.json \
           --region us-east-1
-          aws elasticbeanstalk update-environment --environment-name Small-Square-Docker-v2-env \
+          aws elasticbeanstalk update-environment  \
+          --environment-name Small-Square-Docker-v2-env \
           --version-label ${{ github.sha }} --region us-east-1
 
       # Step 5:
@@ -109,8 +112,6 @@ jobs:
 #        if: always()
 
       ##########################################
-#      s3://elasticbeanstalk-us-east-1-561506039848/1688497147692-Dockerrun.aws.json
-#      https://elasticbeanstalk-us-east-1-561506039848.s3.amazonaws.com/1688497147692-Dockerrun.aws.json
 #      - name: Install AWS CLI
 #        run: |
 #          sudo apt-get install -y awscli
@@ -126,74 +127,7 @@ jobs:
 #        run: |
 #          aws elasticbeanstalk create-application-version --application-name MicroservicioPlazoleta --version-label v1 --source-bundle S3Bucket=my-bucket-jar,S3Key=small-square-microservice-1.0.jar
 #          aws elasticbeanstalk update-environment --environment-name MicroservicioPlazoleta-env --version-label v1
-      ##########################################
 
-
-      # Step 6: Sign in Amazon ECR
-#      - name: Login to Amazon ECR
-#        id: login-ecr
-#        uses: aws-actions/amazon-ecr-login@v1
-
-      # Step 7: Build and Push Docker image to Amazon ECR
-#      - name: Build, tag, and push the image to Amazon ECR
-#        id: build-image
-#        env:
-#          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-#          ECR_REPOSITORY: docker-repository-v1
-#          IMAGE_TAG: small-square-microservice-v7
-#        run: |
-#          # Build a docker container and push it to ECR
-#          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-#          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
-      # Step 8:
-#      - name: Google Chat Notification
-#        uses: Co-qn/google-chat-notification@releases/v1
-#        with:
-#          name: Build
-#          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-#          status: ${{ job.status }}
-#        if: always()
-
-#  deploy:
-#    needs: build
-#    name: Deploy to Elastic Beanstalk
-#    runs-on: ubuntu-latest
-#
-#    steps:
-      # Step 1: Download repository
-#      - name: Checkout code again
-#        uses: actions/checkout@v2
-
-      # Step 2:
-#      - name: Create ZIP deployment package
-#        run: zip -r deploy_package.zip ./
-
-      # Step 3:
-#      - name: Configure AWS Credentials
-#        uses: aws-actions/configure-aws-credentials@v1
-#        with:
-#          aws-access-key-id: ${{ secrets.IAM_ACCESS_KEY }}
-#          aws-secret-access-key: ${{ secrets.IAM_SECRET_KEY }}
-#          aws-region: us-east-1
-
-      ##########################################
-#      - name: Install AWS CLI
-#        run: |
-#          sudo apt-get install -y awscli
-#
-#      - name: List files in build/libs
-#        run: ls -l build/libs
-#
-#      - name: Upload JAR to S3 Bucket
-#        run: |
-#          aws s3 cp ./build/libs/small-square-microservice-1.0.jar s3://my-bucket-jar/small-square-microservice-1.0.jar
-#
-#      - name: Deploy to Elastic Beanstalk
-#        run: |
-#          aws elasticbeanstalk create-application-version --application-name MicroservicioPlazoleta --version-label v1 --source-bundle S3Bucket=my-bucket-jar,S3Key=small-square-microservice-1.0.jar
-#          aws elasticbeanstalk update-environment --environment-name MicroservicioPlazoleta-env --version-label v1
-      ##########################################
 
       # Step 4:
 #      - name: Upload package to S3 bucket
