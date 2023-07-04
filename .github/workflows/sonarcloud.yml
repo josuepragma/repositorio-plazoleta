@@ -92,13 +92,21 @@ jobs:
           --version-label ${{ github.sha }} --region us-east-1
 
       # Step 5:
-      - name: Google Chat Notification
-        uses: Co-qn/google-chat-notification@releases/v1
+      - name: Google Chat Notification v2.0
+        if: always() && steps.deploy.outcome == 'failure'
+        uses: teknatha136/actions-google-chat-text-message@main
         with:
-          name: Build
-          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          status: ${{ job.status }}
-        if: always()
+          google-chat-webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          text-message: Ocurrió un error al construir
+
+      # Step 5:
+#      - name: Google Chat Notification
+#        uses: Co-qn/google-chat-notification@releases/v1
+#        with:
+#          name: Build
+#          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+#          status: ${{ job.status }}
+#        if: always()
 
       ##########################################
 #      s3://elasticbeanstalk-us-east-1-561506039848/1688497147692-Dockerrun.aws.json
