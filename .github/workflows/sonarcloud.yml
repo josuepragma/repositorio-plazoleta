@@ -24,7 +24,7 @@ jobs:
 
       # Step 3:
       - name: Build and run tests with Gradle
-        run: ./gradlew built --stacktrace --info
+        run: ./gradlew build --stacktrace --info
 
       # Step 4:
       - name: Run SonarQube analysis
@@ -56,19 +56,10 @@ jobs:
       - name: Google Chat Notification
         uses: Co-qn/google-chat-notification@releases/v1
         with:
-          name: Build
+          name: Build-And-Publish-Docker-Image
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
           status: ${{ job.status }}
         if: always() && failure()
-
-#      - name: Google Chat Notification v2.0
-#        #        if: always() && jobs.build.outcome != 'success'
-#        if: always() && failure()
-#        uses: teknatha136/actions-google-chat-text-message@main
-#        with:
-#          google-chat-webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-#          text-message: Ocurrió un error al construir
-
 
   deploy:
     name: Deploy to Elastic Beanstalk
@@ -84,7 +75,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.IAM_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.IAM_ACCESS_KEYS }} #***
           aws-secret-access-key: ${{ secrets.IAM_SECRET_KEY }}
           aws-region: us-east-1
 
@@ -101,56 +92,22 @@ jobs:
           --region us-east-1
           aws elasticbeanstalk update-environment  \
           --environment-name Small-Square-Docker-v2-env \
-          --version-label ${{ github.sha }} --region us-east-1
+          --version-label ${{ github.sha }} \
+          --region us-east-1
 
       # Step 5:
-      - name: Google Chat Notification v2.0
-        if: always() && steps.deploy.outcome == 'failure'
-        uses: teknatha136/actions-google-chat-text-message@main
+      - name: Google Chat Notification
+        uses: Co-qn/google-chat-notification@releases/v1
         with:
-          google-chat-webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          text-message: Ocurrió un error al construir
+          name: Deploy-Docker-Image
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: ${{ job.status }}
+        if: always() && failure()
 
-      # Step 5:
-#      - name: Google Chat Notification
-#        uses: Co-qn/google-chat-notification@releases/v1
+#      - name: Google Chat Notification v2.0
+#        #        if: always() && jobs.build.outcome != 'success'
+#        if: always() && failure()
+#        uses: teknatha136/actions-google-chat-text-message@main
 #        with:
-#          name: Build
-#          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-#          status: ${{ job.status }}
-#        if: always()
-
-      ##########################################
-#      - name: Install AWS CLI
-#        run: |
-#          sudo apt-get install -y awscli
-#
-#      - name: List files in build/libs
-#        run: ls -l build/libs
-#
-#      - name: Upload JAR to S3 Bucket
-#        run: |
-#          aws s3 cp ./build/libs/small-square-microservice-1.0.jar s3://my-bucket-jar/small-square-microservice-1.0.jar
-#
-#      - name: Deploy to Elastic Beanstalk
-#        run: |
-#          aws elasticbeanstalk create-application-version --application-name MicroservicioPlazoleta --version-label v1 --source-bundle S3Bucket=my-bucket-jar,S3Key=small-square-microservice-1.0.jar
-#          aws elasticbeanstalk update-environment --environment-name MicroservicioPlazoleta-env --version-label v1
-
-
-      # Step 4:
-#      - name: Upload package to S3 bucket
-#        run: aws s3 cp deploy_package.zip s3://my-awesome-app-deploy-andrey/
-
-      # Step 5:
-#      - name: Create new ElasticBeanstalk Application Version
-#        run: |
-#          aws elasticbeanstalk create-application-version \
-#          --application-name MicroservicioPlazoleta \
-#          --source-bundle S3Bucket="my-awesome-app-deploy-andrey",S3Key="deploy_package.zip" \
-#          --version-label "ver-${{ github.sha }}" \
-#          --description "commit-sha-${{ github.sha }}"
-
-      # Step 6:
-#      - name: Deploy new ElasticBeanstalk Application Version
-#        run: aws elasticbeanstalk update-environment --environment-name MicroservicioPlazoleta-env --version-label "ver-${{ github.sha }}"
+#          google-chat-webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+#          text-message: Ocurrió un error al construir
