@@ -1,5 +1,6 @@
 package com.pragma.smallsquare.insfrastructure.input.rest;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.pragma.smallsquare.application.dto.request.OrderReadyRequest;
 import com.pragma.smallsquare.application.dto.request.OrderRequest;
 import com.pragma.smallsquare.application.dto.request.OrderInPreparationRequest;
@@ -13,7 +14,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +25,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/small-square")
+@XRayEnabled
 public class OrderRestController {
 
     private final IOrderHandler orderHandler;
@@ -115,7 +115,7 @@ public class OrderRestController {
         Map<String, Object> map = new HashMap<>();
         map.put("name", "JOSUE");
         map.put("message", "It works!!!");
-        map.put("version", "v6.0");
+        map.put("version", "v7.0");
         map.put("status", "Success");
 
         return ResponseEntity.ok(map);
