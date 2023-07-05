@@ -1,5 +1,6 @@
 package com.pragma.smallsquare.application.handler.dish;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.pragma.smallsquare.application.dto.request.DishModifyRequest;
 import com.pragma.smallsquare.application.dto.request.DishRequest;
 import com.pragma.smallsquare.application.dto.response.DishResponse;
@@ -25,6 +26,7 @@ import java.util.Objects;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@XRayEnabled
 public class DishHandler implements IDishHandler {
 
     private final IRestaurantServicePort restaurantServicePort;

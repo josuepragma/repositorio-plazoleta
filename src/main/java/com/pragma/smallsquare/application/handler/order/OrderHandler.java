@@ -1,5 +1,6 @@
 package com.pragma.smallsquare.application.handler.order;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.pragma.smallsquare.application.dto.request.OrderInPreparationRequest;
 import com.pragma.smallsquare.application.dto.request.OrderReadyRequest;
 import com.pragma.smallsquare.application.dto.request.OrderRequest;
@@ -18,7 +19,6 @@ import com.pragma.smallsquare.domain.api.IOrderServicePort;
 import com.pragma.smallsquare.domain.model.Order;
 import com.pragma.smallsquare.domain.model.OrderDish;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +29,7 @@ import java.util.Objects;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@XRayEnabled
 public class OrderHandler implements IOrderHandler {
 
     private final IOrderServicePort orderServicePort;

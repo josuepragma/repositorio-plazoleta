@@ -1,5 +1,6 @@
 package com.pragma.smallsquare.application.handler.category;
 
+import com.amazonaws.xray.spring.aop.XRayEnabled;
 import com.pragma.smallsquare.application.dto.response.CategoryResponse;
 import com.pragma.smallsquare.application.mapper.ICategoryResponseMapper;
 import com.pragma.smallsquare.domain.api.ICategoryServicePort;
@@ -13,6 +14,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@XRayEnabled
 public class CategoryHandler implements ICategoryHandler {
 
     private final ICategoryServicePort categoryServicePort;

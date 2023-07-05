@@ -1,5 +1,6 @@
 package com.pragma.smallsquare.insfrastructure.configuration;
 
+import com.amazonaws.xray.javax.servlet.AWSXRayServletFilter;
 import com.pragma.smallsquare.domain.api.ICategoryServicePort;
 import com.pragma.smallsquare.domain.api.IDishServicePort;
 import com.pragma.smallsquare.domain.api.IOrderServicePort;
@@ -30,6 +31,8 @@ import com.pragma.smallsquare.insfrastructure.output.jpa.repository.employee.IEm
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.servlet.Filter;
 
 @Configuration
 @RequiredArgsConstructor
@@ -99,6 +102,11 @@ public class BeanConfiguration {
     @Bean
     public IEmployeeRestaurantServicePort employeeRestaurantServicePort() {
         return new EmployeeRestaurantUseCase(employeeRestaurantPersistencePort());
+    }
+
+    @Bean
+    public Filter TracingFilter() {
+        return new AWSXRayServletFilter("Scorekeep");
     }
 
 }
