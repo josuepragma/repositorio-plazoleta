@@ -53,13 +53,21 @@ jobs:
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/small-square-microservice-v3:latest
 
       # Step 9:
-      - name: Google Chat Notification v2.0
-#        if: always() && jobs.build.outcome != 'success'
-        if: always() && failure()
-        uses: teknatha136/actions-google-chat-text-message@main
+      - name: Google Chat Notification
+        uses: Co-qn/google-chat-notification@releases/v1
         with:
-          google-chat-webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
-          text-message: Ocurrió un error al construir
+          name: Build
+          url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+          status: ${{ job.status }}
+        if: always() && failure()
+
+#      - name: Google Chat Notification v2.0
+#        #        if: always() && jobs.build.outcome != 'success'
+#        if: always() && failure()
+#        uses: teknatha136/actions-google-chat-text-message@main
+#        with:
+#          google-chat-webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+#          text-message: Ocurrió un error al construir
 
 
   deploy:
