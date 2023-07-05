@@ -54,7 +54,7 @@ jobs:
 
       # Step 9:
       - name: Google Chat Notification v2.0
-        if: always() && steps.build.outcome == 'failure'
+        if: always() && jobs.build.outcome == 'failure'
         uses: teknatha136/actions-google-chat-text-message@main
         with:
           google-chat-webhook: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
