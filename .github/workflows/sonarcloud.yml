@@ -59,7 +59,7 @@ jobs:
           name: Build-And-Publish-Docker-Image
           url: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
           status: ${{ job.status }}
-        if: always() && failure()
+        if: always()
 
   deploy:
     name: Deploy to Elastic Beanstalk

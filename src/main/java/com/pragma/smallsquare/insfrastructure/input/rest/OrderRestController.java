@@ -115,7 +115,7 @@ public class OrderRestController {
         Map<String, Object> map = new HashMap<>();
         map.put("name", "JOSUE");
         map.put("message", "It works!!!");
-        map.put("version", "v9.0");
+        map.put("version", "Review");
         map.put("status", "Successfully");
 
         return ResponseEntity.ok(map);
